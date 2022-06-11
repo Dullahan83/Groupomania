@@ -18,3 +18,10 @@ exports.getUserId = (req) => {
     const userId = decodedToken.userId;
     return userId;
 }
+
+exports.getRank = (req) => {
+    const token = req.headers.authorization.split(" ")[1];
+    const decodedToken = jsonWebToken.verify(token, process.env.jwtKey);
+    const hasRights = decodedToken.perm;
+    return hasRights;
+}

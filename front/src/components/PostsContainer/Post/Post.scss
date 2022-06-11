@@ -1,0 +1,136 @@
+.publiWrapper {
+  width: 90%;
+  margin: 1rem auto;
+  background-color: white;
+  display: flex;
+  border-radius: 20px 20px 20px 20px;
+  &:hover {
+    box-shadow: 3px 3px 3px rgb(148, 148, 148);
+  }
+}
+
+.voteContainer {
+  background-color: #152847ff;
+  width: 2rem;
+  color: white;
+  text-align: center;
+  padding: 1rem 0.5rem;
+  border-radius: 20px 0 0 20px;
+}
+.rightBorder {
+  background-color: #152847ff;
+  color: white;
+  width: 2.5rem;
+  text-align: center;
+  padding: 1rem 0.5rem;
+  border-radius: 0 20px 20px 0;
+}
+.rightBorder .editIcon,
+.rightBorder .deleteIcon {
+  font-size: 30px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+.rightBorder .deleteIcon {
+  margin-top: 2.5rem;
+  &:hover {
+    color: rgb(250, 17, 17);
+  }
+}
+.rightBorder .editIcon {
+  &:hover {
+    color: rgb(2, 190, 65);
+  }
+}
+.voteContainer p {
+  font-size: 14px;
+  margin: 0.2rem 0;
+}
+.voteContainer .likeIcon {
+  &:hover {
+    cursor: pointer;
+  }
+}
+.voteContainer .dislikeIcon {
+  &:hover {
+    cursor: pointer;
+  }
+}
+.publiContainer {
+  width: 100%;
+}
+.infoPoster {
+  height: 1.5rem;
+  border-bottom: 1px solid #e4e4e4;
+  display: flex;
+  padding: 0.1rem 0.5rem;
+  font-size: 14px;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+.favIcon {
+  margin-right: 1rem;
+  &:hover {
+    cursor: pointer;
+    color: #ba4d55ff;
+  }
+}
+.usernameLink {
+  color: #152847ff;
+  text-decoration: underline;
+  &:hover {
+    cursor: pointer;
+    font-weight: 800;
+  }
+}
+.publi {
+  display: flex;
+  flex-direction: column;
+}
+.publiTitle {
+  height: 1.5rem;
+  padding: 0.1rem 0.5rem;
+}
+.publi .imgPubli {
+  object-fit: contain;
+  max-height: 40rem;
+  width: 80%;
+  margin: 0 auto;
+}
+.publiContent {
+  padding: 0 0.5rem;
+}
+.bottomPart {
+  display: flex;
+  margin-top: 1.3rem;
+  height: 2.5rem;
+  border-top: 1px solid #e4e4e4;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.2rem 1rem;
+  border-bottom: 1px solid #e4e4e4;
+}
+.bottomPart .hasCommentIcon,
+.bottomPart .addComment {
+  font-size: 30px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+.bottomPart .commentIcon {
+  font-size: 30px;
+}
+.invisibleButton {
+  color: white;
+  border: none;
+  background-color: transparent;
+}
+
+.greenThumb {
+  color: rgb(2, 190, 65);
+}
+.redThumb {
+  color: rgb(250, 17, 17);
+}

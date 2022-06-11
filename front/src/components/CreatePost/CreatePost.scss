@@ -1,0 +1,74 @@
+.postForm {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: #ba4d55ff;
+  width: 60%;
+  margin: 1.5rem auto;
+  color: white;
+  padding: 1rem 1rem 0 1rem;
+  border-radius: 25px;
+  border: 3px solid #152847ff;
+}
+.postForm input {
+  border-radius: 0;
+}
+.postForm #postTitle {
+  margin: 0;
+  border-radius: 12.5px;
+  border: none;
+  padding: 0 1rem;
+  text-align: left;
+  background-color: #e4e4e4;
+}
+.postForm label {
+  margin: 0.5rem 0;
+}
+.postForm #postImg {
+  display: flex;
+  margin: 0;
+  width: fit-content;
+  justify-self: center;
+}
+.postForm textarea {
+  border-radius: 12.5px;
+  padding: 0.5rem 1rem;
+  resize: none;
+  background-color: #e4e4e4;
+  outline: none;
+}
+
+.postForm .invisibleButton {
+  margin: 1rem 0;
+  width: fit-content;
+  display: flex;
+  align-self: center;
+}
+.invisibleButton .sendIcon {
+  font-size: 35px;
+  &:hover {
+    color: #152847ff;
+    cursor: pointer;
+  }
+}
+.createPostContainer .addPostIcon {
+  display: flex;
+  font-size: 55px;
+  margin: 2rem auto;
+  color: white;
+  background-color: #ba4d55ff;
+  border-radius: 50%;
+  border: 2px solid rgba(43, 42, 42, 0.2);
+  &:hover {
+    border: 2px solid #152847ff;
+    cursor: pointer;
+  }
+}
+.postForm .closePostFormIcon {
+  position: absolute;
+  right: 1rem;
+  &:hover {
+    cursor: pointer;
+    color: #152847ff;
+  }
+}

@@ -1,0 +1,47 @@
+header {
+  background-color: #142645ff;
+  color: #fff;
+}
+
+nav {
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logoWrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  font-size: 30px;
+  font-weight: 800;
+  width: 22%;
+  text-transform: uppercase;
+}
+.logoWrapper img {
+  border-radius: 50%;
+  height: 80px;
+  width: 70px;
+  margin: 0 6% 0 15%;
+  animation: rotateLogo linear 30s infinite;
+}
+
+ul {
+  display: flex;
+  padding: 0;
+  margin-right: 2%;
+  list-style: none;
+  justify-content: space-between;
+  width: 20%;
+}
+
+ul li {
+  width: 50%;
+  font-size: 18px;
+  &:hover {
+    cursor: pointer;
+    color: #ba4d55ff;
+  }
+}

@@ -1,15 +1,15 @@
 const multer = require("multer");
-
+const { uuid } = require('uuidv4');
 //Créé une map permettant de récuperer l'extension de fichier d'une image
 const MIME_TYPES = {
   "image/jpg" : "jpg",
   "image/jpeg": "jpg",
   "image/png" : "png",
-  "image/bmp" : ".bmp",
-  "image/tiff": ".tif",
-  "image/tiff": ".tiff",
-  "image/webp": ".webp",
-  "image/gif" : ".gif" 
+  "image/bmp" : "bmp",
+  "image/tiff": "tif",
+  "image/tiff": "tiff",
+  "image/webp": "webp",
+  "image/gif" : "gif" 
 };
 
 const storage = multer.diskStorage({
@@ -17,9 +17,10 @@ const storage = multer.diskStorage({
     callback(null, "images");
   },
   filename: (req, file, callback) => {    // Créé un nom de fichier unique pour pouvoir stocker l'image
-    const name = file.originalname.split(" ").join("_"); // change le format du nom
+    const name = file.originalname.split(".")[0]; // change le format du nom
     const extension = MIME_TYPES[file.mimetype]; // récupère l'extension
-    callback(null, name + Date.now() + "." + extension); // renvoie le nouveau nom en ajoutant la date et l'extension
+    console.log(name)
+    callback(null, name + uuid() + "." + extension); // renvoie le nouveau nom en ajoutant la date et l'extension
   },
 });
 

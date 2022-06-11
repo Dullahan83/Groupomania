@@ -1,0 +1,38 @@
+.commentContainer {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  margin: 0 auto;
+}
+.commentContent {
+  padding: 0.5rem;
+  border-bottom: 1px solid black;
+}
+.infoIcons {
+  display: flex;
+  border-bottom: 1px solid #e4e4e4;
+  justify-content: space-between;
+  padding: 0.2rem 0.5rem;
+  align-items: center;
+}
+.infoCommentPoster {
+  display: flex;
+  font-size: 14px;
+  align-items: center;
+}
+.infoCommentPoster .usernameLink {
+  margin-left: 0.3rem;
+}
+.commentIcons .commentDeleteIcon {
+  padding-left: 1rem;
+  &:hover {
+    cursor: pointer;
+    color: rgb(250, 17, 17);
+  }
+}
+.commentIcons .commentEditIcon {
+  &:hover {
+    cursor: pointer;
+    color: rgb(2, 190, 65);
+  }
+}

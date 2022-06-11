@@ -11,15 +11,21 @@ exports.signup = (req, res, next) =>{
         database.query('INSERT INTO `users`(`username`,`email`,`password`) VALUES(?, ? , ?)', [req.body.username, req.body.email, hash],
             function(err, results, fields){
                 if(err){
-                    console.log(err)
-                    console.log("Erreur lors de la création de l'utilisateur");
+                    if(err.errno === 1048){
+                        res.status(400).json({message: err.sqlMessage})
+                    }
+                    else if(err.errno === 1062){
+                        res.status(409).json({message: err.sqlMessage})
+                    }
+                    else{
+                        res.status(500).json({message: "Unknown error"})
+                        console.log(err)
+                    }
                 }else{
-                    console.log(results);
-                    console.log("Utilisateur crée avec succés")
+                    res.status(200).json({message: "User successfully created"})
                 }
-
             }
-        )})
+    )})
 }
 
 /* exports.get = (req, res, next) => {
@@ -42,9 +48,8 @@ exports.login = (req, res, next) =>{
                     return res.status(401).json({error: 'Mot de passe incorrect'})
                 }
                 res.status(201).json({
-                    userId: results[0].id,
                     token: jsonWebToken.sign(
-                        {userId: results[0].id},
+                        {userId: results[0].id, perm: results[0].has_rights},
                         process.env.jwtKey,
                         {expiresIn: "2h"}
                     )
@@ -53,6 +58,7 @@ exports.login = (req, res, next) =>{
             .catch(error => res.status(500).json({error}));
         }
         else{
+            res.status(404).json({message: "Mail not found"})
             console.log("Erreur: adresse mail non reconnue !")
         }
     })         

@@ -1,0 +1,49 @@
+.wrapper {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+}
+.wrapper img {
+  display: none;
+  @media screen and (min-width: 768px) {
+    display: flex;
+    width: 60%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+.rightsideContainer img {
+  height: 200px;
+  width: 200px;
+  color: #ba4d55ff;
+  display: flex;
+  border-radius: 50%;
+  margin: 8rem auto 0 auto;
+  animation: rotateLogo linear 20s infinite;
+}
+
+.rightsideContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto 0 auto;
+  @media screen and (min-width: 768px) {
+    width: 40%;
+  }
+}
+
+h1 {
+  color: #ba4d55ff;
+  text-transform: uppercase;
+}
+
+#toggleButton {
+  border: none;
+  background-color: transparent;
+  color: rgb(3, 69, 175);
+  &:hover {
+    cursor: pointer;
+  }
+}

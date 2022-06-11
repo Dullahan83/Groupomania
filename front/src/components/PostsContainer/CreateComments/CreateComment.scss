@@ -1,0 +1,39 @@
+.createComment {
+  display: Flex;
+  width: 100%;
+}
+.commentContent {
+  resize: none;
+  outline: none;
+  padding: 0.2rem 0.5rem;
+  width: 100%;
+  border: 1px solid #152847ff;
+}
+.createCommentBody {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+}
+
+.createCommentBody .sendIcon {
+  color: #fff;
+  margin: 1rem 1rem;
+  &:hover {
+    cursor: pointer;
+    color: #152847ff;
+  }
+}
+.createCommentBody .sendIconContainer {
+  display: flex;
+  background-color: #ba4d55ff;
+  align-items: center;
+  height: 100%;
+  border-bottom: 1px solid #152847ff;
+  &:hover {
+    cursor: pointer;
+    .sendIcon {
+      color: #152847ff;
+    }
+  }
+}
