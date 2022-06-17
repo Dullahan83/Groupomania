@@ -19,7 +19,6 @@ const storage = multer.diskStorage({
   filename: (req, file, callback) => {    // Créé un nom de fichier unique pour pouvoir stocker l'image
     const name = file.originalname.split(".")[0]; // change le format du nom
     const extension = MIME_TYPES[file.mimetype]; // récupère l'extension
-    console.log(name)
     callback(null, name + uuid() + "." + extension); // renvoie le nouveau nom en ajoutant la date et l'extension
   },
 });

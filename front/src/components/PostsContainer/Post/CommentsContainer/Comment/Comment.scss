@@ -6,7 +6,9 @@
 }
 .commentContent {
   padding: 0.5rem;
+  border: none;
   border-bottom: 1px solid black;
+  white-space: pre-wrap;
 }
 .infoIcons {
   display: flex;
@@ -14,6 +16,7 @@
   justify-content: space-between;
   padding: 0.2rem 0.5rem;
   align-items: center;
+  background-color: #e4e4e4;
 }
 .infoCommentPoster {
   display: flex;
@@ -35,4 +38,14 @@
     cursor: pointer;
     color: rgb(2, 190, 65);
   }
+}
+
+.commentIcons .sendIcon {
+  &:hover {
+    cursor: pointer;
+    color: rgb(2, 190, 65);
+  }
+}
+.editContent {
+  resize: none;
 }

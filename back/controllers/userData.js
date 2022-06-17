@@ -1,15 +1,15 @@
 const database = require('../util/database')
 const jsonWebToken = require('jsonwebtoken')
 const misc = require('../util/functions')
-
+const fs = require('fs');
 
 exports.getProfile = (req, res, next) => {
-    database.query('SELECT * FROM `users` WHERE username=?',[req.params.username], function(err, results, fields){
+    database.query('SELECT id,username, avatar, presentation, firstname, lastname FROM `users` WHERE username=?',[req.params.username], function(err, results, fields){
         if(err){
-            res.status(400).json({message: err.sqlMessage})
+            return res.status(400).json({message: err.sqlMessage})
         }
         else{
-            res.status(400).json(results[0])
+            return res.status(200).json(results[0])
         }
     })
 }
@@ -18,62 +18,40 @@ exports.getUserPosts = (req, res, next) => {
     let profileId
     database.query('SELECT * FROM `users` WHERE username=?',[req.params.username], function(err, results, fields){
         if(err){
-            res.status(400).json({message: err.sqlMessage})
+            return res.status(400).json({message: err.sqlMessage})
         }
         else{
             profileId = results[0].id
-            console.log(profileId)
-            database.query('SELECT publications.title, publications.image, publications.content, publications.created_at, users.username, users.avatar FROM publications INNER JOIN users ON publications.users_id=users.id WHERE users.id=?',
+            database.query('SELECT p.*, u.username, u.avatar FROM publications as p INNER JOIN users as u ON p.users_id=u.id WHERE u.id=?',
             [profileId],function(err, results, fields){
                 if(err){
-                    res.status(400).json({message: err.sqlMessage})
+                    return res.status(400).json({message: err.sqlMessage})
                 }
                 else{
-                    res.status(200).json(results)
+                    return res.status(200).json(results)
                 }
             })
         }
     })
 }
 
-exports.getUserComments = (req, res, next) => {
-    let profileId
-    database.query('SELECT * FROM `users` WHERE username=?',[req.params.username], function(err, results, fields){
-        if(err){
-            res.status(400).json({message: err.sqlMessage})
-        }
-        else{
-            profileId = results[0].id
-            console.log(profileId)
-            database.query('SELECT comments.content FROM comments INNER JOIN users ON comments.users_id=users.id WHERE users.id=?',
-            [profileId],function(err, results, fields){
-                if(err){
-                    res.status(400).json({message: err.sqlMessage})
-                }
-                else{
-                    res.status(200).json(results)
-                }
-            })
-        }
-    })
-}
+
 
 exports.getUserFavorites = (req, res, next) => {
     let profileId
-    database.query('SELECT * FROM `users` WHERE username=?',[req.params.username], function(err, results, fields){
+    database.query('SELECT id FROM `users` WHERE username=?',[req.params.username], function(err, results, fields){
         if(err){
-            res.status(400).json({message: err.sqlMessage})
+            return res.status(400).json({message: err.sqlMessage})
         }
         else{
             profileId = results[0].id
-            console.log(profileId)
-            database.query('SELECT * from publications INNER JOIN favorites ON favorites.publications_id=publications.id WHERE favorites.users_id=?',
+            database.query('SELECT p.*, u.username from publications as p INNER JOIN favorites as f ON f.publications_id=p.id INNER JOIN users as u ON p.users_id=u.id WHERE f.users_id=?',
             [profileId],function(err, results, fields){
                 if(err){
-                    res.status(400).json({message: err.sqlMessage})
+                    return res.status(400).json({message: err.sqlMessage})
                 }
                 else{
-                    res.status(200).json(results)
+                    return res.status(200).json(results)
                 }
             })
         }
@@ -85,27 +63,83 @@ exports.getUserFavorites = (req, res, next) => {
 exports.modifyProfile = (req, res, next) => {
     database.query('SELECT * FROM users WHERE username=?', [req.params.username], function(err, results, fields){
         let profileId = results[0].id
+        const prevImgUrl = results[0].avatar
+        console.log(prevImgUrl)
         const userId = misc.getUserId(req);
-        if(profileId === userId){
-            database.query('UPDATE users SET avatar=?, firstname=?, lastname=?, presentation=? WHERE id=?',
-            [req.body.avatar, req.body.firstname, req.body.lastname, req.body.presentation, profileId],
-            function(err, results, fields){
-                if(err){
-                    res.status(400).json({message: err.sqlMessage})
-                }
-                else{
-                    console.log("Profil modifié avec succès !")
-                    res.status(200).json({message: "Successfully modified !"})
-                }
-            })
+        if(req.file !== undefined){
+            const imgUrl = `images/${req.file.filename}`;
+            if(profileId === userId){
+                database.query('UPDATE users SET avatar=?, firstname=?, lastname=?, presentation=? WHERE id=?',
+                [imgUrl, req.body.firstname, req.body.lastname, req.body.presentation, profileId],
+                function(err, results, fields){
+                    if(err){
+                        return res.status(400).json({message: err.sqlMessage})
+                    }
+                    else{
+                        console.log('ici')
+                        if(prevImgUrl){
+                            fs.unlinkSync(`${prevImgUrl}`)
+                        }
+                        return res.status(200).json({message: "Successfully modified !"})
+                    }
+                })
+            }
+            else if(err){
+                return res.status(400).json({message: err.sqlMessage})
+            }
+            else{
+                return res.status(403).json({message: "You don't have the permissions"})
+            }
         }
-        else if(err){
-            res.status(400).json({message: err.sqlMessage})
+        else if(prevImgUrl && req.file === undefined){
+            if(profileId === userId){
+                database.query('UPDATE users SET avatar=?, firstname=?, lastname=?, presentation=? WHERE id=?',
+                [prevImgUrl, req.body.firstname, req.body.lastname, req.body.presentation, profileId],
+                function(err, results, fields){
+                    if(err){
+                        return res.status(400).json({message: err.sqlMessage})
+                    }
+                    else{
+                        console.log('ou là')
+                        return res.status(200).json({message: "Successfully modified !"})
+                    }
+                })
+            }
+            else if(err){
+                return res.status(400).json({message: err.sqlMessage})
+            }
+            else{
+                return res.status(403).json({message: "You don't have the permissions"})
+            }
+        }
+        else if(req.file === undefined){
+            console.log('On est là');
+            const imgUrl = `images/DefaultProfil.jpg`;
+            if(profileId === userId){
+                database.query('UPDATE users SET avatar=?, firstname=?, lastname=?, presentation=? WHERE id=?',
+                [imgUrl, req.body.firstname, req.body.lastname, req.body.presentation, profileId],
+                function(err, results, fields){
+                    if(err){
+                        return res.status(400).json({message: err.sqlMessage})
+                    }
+                    else{
+
+                        return res.status(200).json({message: "Successfully modified !"})
+                    }
+                })
+            }
+            else if(err){
+                return res.status(400).json({message: err.sqlMessage})
+            }
+            else{
+                return res.status(403).json({message: "You don't have the permissions"})
+            }
         }
         else{
-            res.status(403).json({message: "You don't have the permissions"})
-            console.log("Erreur d'authentification, vous n'avez pas les permissions requises");
+            console.log("ça se passe ici")
+            return res.status(500).json({message: err.sqlMessage})
         }
+        
     })
 }
 
@@ -113,69 +147,100 @@ exports.deleteProfile = (req, res, next) => {
     database.query('SELECT * FROM users WHERE username=?', [req.params.username], function(err, results, fields){
         let profileId = results[0].id
         const userId = misc.getUserId(req);
+        const imgPath = results[0].avatar
         if(profileId === userId){
             database.query('DELETE FROM users WHERE id=?', [userId], function(err, results, fields){
                 if(err){
-                    res.status(400).json({message: err.sqlMessage})
-                    console.log("Echec de la suppression du profil");
+                    return res.status(400).json({message: err.sqlMessage})
                 }
                 else{
-                    res.status(200).json({message: "Successfully deleted !"})
-                    console.log("Suppression du profil effectuée !");
+                    fs.unlinkSync(imgPath)
+                    return res.status(200).json({message: "Successfully deleted !"})
                 }
             })
         }
         else if(err){
-            res.status(400).json({message: err.sqlMessage})
+            return res.status(400).json({message: err.sqlMessage})
         }
         else{
-            res.status(403).json({message: "You don't have the permissions"});
+            return res.status(403).json({message: "You don't have the permissions"});
         }
     })
 }
 
-exports.getUserFriendlist = (req, res, next) => {
+exports.getUserFollowed = (req, res, next) => {
     let profileId
     database.query('SELECT * FROM `users` WHERE username=?',[req.params.username], function(err, results, fields){
         if(err){
-            res.status(400).json({message: err.sqlMessage})
+            return res.status(400).json({message: err.sqlMessage})
         }
         else{
             profileId = results[0].id
-            console.log(profileId)
-            database.query('SELECT users.username from users INNER JOIN friendlist ON friendlist.friend_id=users.id WHERE friendlist.users_id=?',
+            database.query('SELECT users.username from users INNER JOIN follows ON follows.followed_id=users.id  WHERE follows.users_id=?',
             [profileId],function(err, results, fields){
                 if(err){
-                    res.status(400).json({message: err.sqlMessage})
+                    return res.status(400).json({message: err.sqlMessage})
                 }
                 else{
-                    res.status(200).json(results)
+                    return res.status(200).json(results)
                 }
             })
         }
     })
 }
 
-exports.addFriend= (req, res, next) => {
+exports.Follow= (req, res, next) => {
+    let profileId
     const userId= misc.getUserId(req)
-    database.query('INSERT INTO friendlist(users_id, friend_id)VALUES(?, ?)',[userId, req.body.friend_id], function(err, results, fields){
+    database.query('SELECT id FROM users WHERE username=?',[req.params.username], function(err, results, fiels){
         if(err){
-            res.status(400).json({message: err.sqlMessage})
+            return res.status(400).json({message: err.sqlMessage})
         }
         else{
-            res.status(200).json({message: "Friend request sent"})
+            profileId = results[0].id
+            database.query('SELECT * FROM follows WHERE users_id=? AND followed_id=?',[userId, profileId], function(err,results, fields){
+                if(err){
+                   return res.status(400).json({message: err.sqlMessage})
+                }
+                else if(results.length === 0){
+                    database.query('INSERT INTO follows(users_id, followed_id)VALUES(?, ?)',[userId, profileId], function(err, results, fields){
+                        if(err){
+                            return res.status(400).json({message: err.sqlMessage})
+                        }
+                        else{
+                            return res.status(200).json({message: "Stalker c'est mal tu sais ?!"})
+                        }
+                    })
+                }
+                else if(results.length > 0){
+                    return res.status(200).json({message: "Tu stalke déjà cette personne !"})
+                }
+                else{
+                    return res.status(500).json({message: "Aie, aie, aie .... Il y a une couille dans le potage"})
+                }
+            })
+            
         }
     })
 }
 
-exports.deleteFriend = (req, res, next) => {
+exports.Unfollow = (req, res, next) => {
+    let profileId
     const userId = misc.getUserId(req)
-    database.query('DELETE FROM friendlist WHERE friendlist.friend_id=?', [userId], function(err, results, fields){
+    database.query('SELECT id FROM users WHERE username=?',[req.params.username], function(err, results, fiels){
         if(err){
-            res.status(400).json({message: err.sqlMessage})
+            return res.status(400).json({message: err.sqlMessage})
         }
         else{
-            res.status(200).json({message: "Successfully deleted !"})
+            profileId = results[0].id
+            database.query('DELETE FROM follows WHERE follows.followed_id=? AND users_id=?', [profileId, userId], function(err, results, fields){
+                if(err){
+                    return res.status(400).json({message: err.sqlMessage})
+                }
+                else{
+                    return res.status(200).json({message: "Successfully deleted !"})
+                }
+            })
         }
     })
 }

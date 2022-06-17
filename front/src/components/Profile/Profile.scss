@@ -1,0 +1,232 @@
+#profile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5rem;
+  flex-direction: column;
+}
+#profileCard {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#profileContainer {
+  background-color: #ba4d55ff;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 25px;
+  margin: 3rem 4rem 3rem 0;
+  border: 2px solid #152847ff;
+  padding: 1rem;
+  color: #fff;
+  position: relative;
+}
+
+.imgProfile {
+  display: flex;
+  height: 120px;
+  width: 100%;
+  align-items: center;
+  margin: 2rem 0;
+  flex-direction: column;
+}
+
+.imgProfile img {
+  height: 120px;
+  width: 120px;
+  border-radius: 50%;
+  margin-bottom: 0.5rem;
+}
+.userInfos p,
+.labels h4 {
+  margin: 1rem 0;
+}
+.profileContainer .labels {
+  color: black;
+  width: 8rem;
+}
+.profileFields {
+  display: flex;
+  margin-top: 1rem;
+}
+
+.userInfos {
+  margin-left: 1.5rem;
+}
+.labels {
+  min-width: 6rem;
+  margin: 0;
+  height: fit-content;
+}
+
+#profileCard .onglets {
+  background-color: #152847ff;
+  border-radius: 25px 0 0 25px;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  border: 2px solid #ba4d55ff;
+  border-right: none;
+  align-items: center;
+  position: relative;
+}
+.onglets .onglet {
+  border-bottom: 1px solid #ba4d55ff;
+}
+.onglets .firstOnglet,
+.onglets .onglet,
+.onglets .lastOnglet {
+  padding: 0.5rem 0.5rem;
+  font-size: 35px;
+  &:hover {
+    color: #ba4d55ff;
+    cursor: pointer;
+  }
+}
+.onglets .firstOnglet {
+  border-bottom: 1px solid #ba4d55ff;
+  border-radius: 25px 0 0 0;
+}
+.onglets .lastOnglet {
+  border-radius: 0 0 0 25px;
+}
+.quickBio {
+  min-height: 8rem;
+  white-space: pre-wrap;
+}
+.editProfile {
+  position: absolute;
+  font-size: 35px;
+  justify-self: flex-end;
+  right: 1rem;
+  top: 1rem;
+  &:hover {
+    cursor: pointer;
+    color: #152847ff;
+  }
+}
+.formProfile {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.profileInputs {
+  display: flex;
+  align-items: center;
+  margin: 0.5rem 0;
+}
+.inputLabels {
+  min-width: 6rem;
+  margin: 0 2rem 0 0;
+  height: fit-content;
+}
+.profileInputs input {
+  margin-right: 2rem;
+  border: none;
+}
+
+.profileInputs textarea {
+  width: 100%;
+  margin: 0 2rem 0 0.5rem;
+  border-radius: 20px;
+  padding: 1rem;
+}
+.formProfile button {
+  margin-top: 0.8rem;
+  border: none;
+  background-color: transparent;
+  color: white;
+}
+#sendIcon {
+  &:hover {
+    color: #152847ff;
+    cursor: pointer;
+  }
+}
+#publications {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+#publications h2 {
+  position: relative;
+  text-align: center;
+  margin-bottom: 1rem;
+  border: 2px solid #152847ff;
+  width: 60%;
+  border-radius: 25px;
+  background-color: #ba4d55ff;
+  color: #fff;
+}
+#bookmarks {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#bookmarks h2 {
+  position: relative;
+  text-align: center;
+  border: 2px solid #152847ff;
+  width: 60%;
+  border-radius: 25px;
+  background-color: #ba4d55ff;
+  color: #fff;
+}
+.postContainer {
+  width: 100%;
+}
+.bookmarkContainer {
+  width: 100%;
+}
+.activated {
+  color: #ba4d55ff;
+}
+#deleteButton {
+  height: fit-content;
+  width: fit-content;
+  border-radius: 20px;
+  border: 2px solid #fff;
+  background-color: #152847ff;
+  color: #fff;
+  font-size: 16px;
+  align-self: center;
+  padding: 0.5rem;
+  margin: 1rem;
+  &:hover {
+    cursor: pointer;
+    box-shadow: 2px 2px 2px rgb(0, 0, 0);
+  }
+}
+#confirmDelete {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+#confirmButton {
+  margin: 1rem 0;
+  width: fit-content;
+  display: flex;
+}
+#confirmButton button {
+  margin: 0 0.5rem;
+  border-radius: 15px;
+  width: 5rem;
+  border: 2px solid #fff;
+  color: #fff;
+  &:hover {
+    cursor: pointer;
+    box-shadow: 2px 2px 2px rgb(0, 0, 0);
+  }
+}
+#confirmationButton {
+  background-color: rgb(2, 190, 65);
+}
+#backButton {
+  background-color: rgb(250, 17, 17);
+}

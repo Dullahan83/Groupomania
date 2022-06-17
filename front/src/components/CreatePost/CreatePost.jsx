@@ -24,6 +24,7 @@ function Createpost() {
   function expand() {
     setIsClicked(!isClicked)
   }
+
   const formData = new FormData()
   formData.append('title', title)
   formData.append('image', image)

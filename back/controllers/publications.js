@@ -3,52 +3,42 @@ const misc = require('../util/functions')
 const fs = require('fs');
 const jsonWebToken= require ('jsonwebtoken');
 const env = require('dotenv');
-
+const host = process.env.host
 
 exports.getAll = (req,res,next) =>{
     database.query('SELECT p.*, u.username FROM publications AS p INNER JOIN users AS u WHERE p.users_id = u.id', function(err, results, fields){
         if (err) {
-            res.status(500).json({message: err.sqlMessage});
+            return res.status(500).json({message: err.sqlMessage});
         }
         else{
-            res.status(200).json(results)
+            return res.status(200).json({results, host})
         }
     })
 }
 
-exports.getOne = (req,res,next) =>{
-    database.query('SELECT * FROM `publications` WHERE id=?',[req.params.publication_id], function(err, results, fields){
-        if (err) {
-            res.status(500).json();
-        }
-        else{
-            res.status(200).json(results)
-        }
-    })
-}
+
 
 exports.create = (req,res,next) =>{
     const formatDate = misc.formatDate()
-    const host = `${req.protocol}://${req.get('host')}`
     if(req.file !== undefined){
-        const imgUrl = `${host}/images/${req.file.filename}`;
+        const imgUrl = `images/${req.file.filename}`;
         if(req.body.content === undefined){
             database.query('INSERT INTO `publications`(`title`, `image`, `created_at`, `users_id`)values(?, ?, ?,?)',[req.body.title, imgUrl, formatDate, req.body.userId], function(err, results, fields){
                 if(err){
-                    res.status(400).json({message: err.sqlMessage})
+                    return res.status(400).json({message: err.sqlMessage})
                 }
                 else{
-                    res.status(201).json({message: "Successfully created !"})
+                    return res.status(201).json({message: "Successfully created !"})
                 }
             });
         }
         else{
             database.query('INSERT INTO `publications`(`title`, `image`, `content`, `created_at`, `users_id`)values(?, ?, ?, ?, ?)',[req.body.title, imgUrl,req.body.content, formatDate, req.body.userId], function(err, results, fields){
                 if(err){
-                    res.status(400).json({message: err.sqlMessage})
+                    return res.status(400).json({message: err.sqlMessage})
                 }
                 else{
-                    res.status(201).json(results)
+                    return res.status(201).json(results)
                 }
             });
         }
@@ -56,10 +46,10 @@ exports.create = (req,res,next) =>{
     else{
         database.query('INSERT INTO `publications`(`title`, `content`, `created_at`, `users_id`)values(?, ?, ?, ?)',[req.body.title, req.body.content, formatDate, req.body.userId], function(err, results, fields){
             if(err){
-                res.status(400).json({message: err.sqlMessage})
+                return res.status(400).json({message: err.sqlMessage})
             }
             else{
-                res.status(201).json(results)
+                return res.status(201).json(results)
             }
         });
     }
@@ -70,52 +60,45 @@ exports.delete = (req,res,next) =>{
     const hasRights = misc.getRank(req)
     database.query('SELECT * FROM `publications` WHERE id=?', [req.params.publication_id], function(err, results, fields){
         if(results.length === 0){
-            res.status(500).json({message: "Oops, something went wrong ..."})
+            return res.status(500).json({message: "Oops, something went wrong ..."})
         }
         else{
             if(results[0].image !== null){
-                const filename = results[0].image.split('/images/')[1];
-            console.log(filename)
+                const filename = results[0].image.split('images/')[1];
                 if(results[0].users_id === userId || hasRights === 1){
                     database.query('DELETE FROM `publications` WHERE id=?', [req.params.publication_id], function(err, results, fields){
                         fs.unlinkSync(`images/${filename}`)
                         if(err){
-                            res.status(400).json({message: err.sqlMessage})
-                            console.log("Erreur lors de la suppression de la publication");
+                            return res.status(400).json({message: err.sqlMessage})
                         }
                         else{
-                            res.status(200).json(results)
-                            console.log("Publication supprimée avec succès !");
+                            return res.status(204).json()
                         }
                     })
                 }
                 else if(err){
-                    res.status(400).json({message: err.sqlMessage})
+                    return res.status(400).json({message: err.sqlMessage})
                 }
                 else{
-                    res.status(403).json({message: "You don't have the required permissions"})
-                    console.log("Erreur d'authentification, vous n'avez pas les permissions requises")
+                    return res.status(403).json({message: "You don't have the required permissions"})
                 }
             }
             else{
                 if(results[0].users_id === userId || hasRights === 1){
                     database.query('DELETE FROM `publications` WHERE id=?', [req.params.publication_id], function(err, results, fields){
                         if(err){
-                            res.status(400).json({message: err.sqlMessage})
-                            console.log("Erreur lors de la suppression de la publication");
+                            return res.status(400).json({message: err.sqlMessage})
                         }
                         else{
-                            res.status(200).json(results)
-                            console.log("Publication supprimée avec succès !");
+                            return res.status(200).json(results)
                         }
                     })
                 }
                 else if(err){
-                    res.status(400).json({message: err.sqlMessage})
+                    return res.status(400).json({message: err.sqlMessage})
                 }
                 else{
-                    res.status(403).json({message: "You don't have the required permissions"})
-                    console.log("Erreur d'authentification, vous n'avez pas les permissions requises")
+                    return res.status(403).json({message: "You don't have the required permissions"})
                 }
             }
             
@@ -127,26 +110,42 @@ exports.modify = (req,res,next) =>{
     const userId = misc.getUserId(req)
     const hasRights = misc.getRank(req)
     database.query('SELECT * FROM publications WHERE id=?', [req.params.publication_id], function(err, results, fields){
+        const filename = results[0].image.split('images/')[1];
         if(results[0].users_id === userId || hasRights === 1){
-            database.query('UPDATE `publications` SET title=?, image=?, content=? WHERE id=?',
-            [req.body.title, req.body.image, req.body.content, req.params.publication_id], 
-            function(err, results, fields){
-                if(err){
-                    res.status(400).json({message: err.sqlMessage})
-                    console.log("Erreur lors de la modification de la publication");
-                }
-                else{
-                    res.status(200).json(results)
-                    console.log("Publication modifiée avec succès !");
-                }
-            })
+            const host = `${req.protocol}://${req.get('host')}`
+            if(req.file !== undefined){
+                fs.unlinkSync(`images/${filename}`)
+                const imgUrl = `images/${req.file.filename}`;
+                database.query('UPDATE `publications` SET title=?, image=?, content=? WHERE id=?',
+                [req.body.title, imgUrl, req.body.content, req.params.publication_id], 
+                function(err, results, fields){
+                    if(err){
+                        return res.status(400).json({message: err.sqlMessage})
+                    }
+                    else{
+                        return res.status(200).json(results)
+                    }
+                })
+            }
+            else{
+                database.query('UPDATE `publications` SET title=?, content=? WHERE id=?',
+                [req.body.title, req.body.content, req.params.publication_id], 
+                function(err, results, fields){
+                    if(err){
+                        return res.status(400).json({message: err.sqlMessage})
+                    }
+                    else{
+                        return res.status(200).json(results)
+                    }
+                })
+            }
+            
         }
         else if(err){
-            res.status(400).json({message: err.sqlMessage})
+            return res.status(400).json({message: err.sqlMessage})
         }
         else{
-            res.status(403).json({message: "You don't have the required permissions"})
-            console.log("Erreur d'authentification, vous n'avez pas les permissions requises");
+            return res.status(403).json({message: "You don't have the required permissions"})
         }  
     })  
 }
@@ -188,7 +187,7 @@ exports.like = (req,res,next) =>{
                 })
             }
             else{
-                res.status(400).json({message: 'Vote non conforme'})
+                return res.status(400).json({message: 'Vote non conforme'})
             }
             
         }
@@ -290,22 +289,36 @@ exports.addFavorites = (req, res, next) => {
         if(results.length === 0){
             {database.query('INSERT INTO favorites(publications_id, users_id)VALUES(?, ?)',[req.params.publication_id, userId], function(err, results, fields){
                 if(err){
-                    res.status(400).json({message: err.sqlMessage})
+                    return res.status(400).json({message: err.sqlMessage})
                 }
                 else{
-                    res.status(201).json({message: "Added to bookmark"})
+                    return res.status(201).json({message: "Added to bookmark"})
                 }
             })}
         }
         else if(err){
-            res.status(400).json({message: err.sqlMessage})
+            return res.status(400).json({message: err.sqlMessage})
         }
         else if(results.length > 0){
-            res.status(200).json({message: "Already bookmarked. Check profile to delete"})
+            return res.status(200).json({message: "Already bookmarked. Check profile to delete"})
         }
         else{
-            res.status(500).json({message: 'Oops, something went wrong'})
+            return res.status(500).json({message: 'Oops, something went wrong'})
         }
     })
     
+}
+
+exports.deleteBookmark = (req, res, next) => {
+    const userid = misc.getUserId(req)
+    database.query('DELETE FROM favorites WHERE publications_id=?', [req.params.publication_id], function(err, results, fields){
+        if(err){
+            return res.status(400).json({message: err.sqlMessage})
+        }
+        else{
+            console.log('Tout est ok')
+            return res.status(204).json({message: 'Favori supprimé'})
+        }
+        
+    })
 }

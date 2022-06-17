@@ -1,15 +1,15 @@
 import React from 'react'
 import styles from './Login.scss'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
-
+import { userContext } from '../../utils/context/userContext'
 function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const { isOnline, setIsOnline } = useContext(userContext)
   const navigate = useNavigate()
 
   function handleForm(e) {
@@ -19,21 +19,21 @@ function Login() {
         password: password,
       })
       .then((res) => {
-        setIsLoggedIn(true)
+        setIsOnline(true)
         Cookies.set('token', res.data.token, { expires: 0.5 })
-        console.log(res.data.token)
         toast.success('Successfully logged-in !')
         navigate('/home')
       })
       .catch((err) => {
         if (typeof err.response.data.message === 'string') {
           toast.error(err.response.data.message)
+        } else if (err.response.data.error) {
+          toast.error(err.response.data.error)
         } else {
           toast.error(err.response.data.message[0])
         }
       })
     e.preventDefault()
-    setIsLoggedIn(false)
   }
 
   return (

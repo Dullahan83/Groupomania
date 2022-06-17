@@ -3,12 +3,17 @@
   min-height: 100vh;
   flex-direction: column;
   background-color: #e4e4e4;
-  background-image: url('https://www.transparenttextures.com/patterns/paven.png');
+  background-image: url('https://www.transparenttextures.com/patterns/retina-wood.png');
 }
 .welcomeMsg {
   width: 100%;
-  text-align: center;
   border-bottom: 1px solid rgba(24, 43, 73, 0.521);
+  display: flex;
+  justify-content: center;
+}
+.welcomeMsg h1 {
+  position: relative;
+  width: fit-content;
 }
 .panels {
   display: flex;

@@ -3,13 +3,24 @@ import LogoAlone from '../../assets/icon.png'
 import picture from '../../assets/Home-site-1-1024x488.png'
 import Signup from '../../components/Signup/Signup'
 import Login from '../../components/Login/Login'
-import { useState } from 'react'
+import { useState, useContext, useEffect } from 'react'
+import { userContext } from '../../utils/context/userContext'
+import { useNavigate } from 'react-router-dom'
+
 function Auth() {
   const [toggle, setToggle] = useState(false)
+  const { isOnline } = useContext(userContext)
+  const navigate = useNavigate()
 
   function handleClick() {
     setToggle(!toggle)
   }
+  useEffect(() => {
+    if (isOnline) {
+      navigate('/home')
+    }
+  })
+
   return (
     <div className="wrapper">
       <img src={picture} alt="groupomania" />

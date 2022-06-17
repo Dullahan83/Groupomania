@@ -1,12 +1,15 @@
 .publiWrapper {
   width: 90%;
-  margin: 1rem auto;
+  margin: 1rem auto 4rem auto;
   background-color: white;
   display: flex;
   border-radius: 20px 20px 20px 20px;
+  border-top: 1px solid #152847ff;
+  border-bottom: 1px solid #152847ff;
   &:hover {
     box-shadow: 3px 3px 3px rgb(148, 148, 148);
   }
+  position: relative;
 }
 
 .voteContainer {
@@ -70,8 +73,12 @@
   width: 100%;
   justify-content: space-between;
 }
-.favIcon {
+.infoPoster button {
   margin-right: 1rem;
+}
+.favIcon {
+  padding-top: 0.3rem;
+  color: black;
   &:hover {
     cursor: pointer;
     color: #ba4d55ff;
@@ -91,16 +98,18 @@
 }
 .publiTitle {
   height: 1.5rem;
-  padding: 0.1rem 0.5rem;
+  padding: 0.5rem 0.5rem;
+  text-align: center;
 }
 .publi .imgPubli {
   object-fit: contain;
   max-height: 40rem;
   width: 80%;
-  margin: 0 auto;
+  margin: 1rem auto 1rem auto;
 }
 .publiContent {
-  padding: 0 0.5rem;
+  padding: 0.5rem 0.5rem;
+  white-space: pre-wrap;
 }
 .bottomPart {
   display: flex;
@@ -133,4 +142,25 @@
 }
 .redThumb {
   color: rgb(250, 17, 17);
+}
+.inputPubliTitle {
+  height: 1.5rem;
+  padding: 0.1rem 0.5rem;
+  text-align: center;
+  border-radius: 0;
+  width: 80%;
+}
+.inputEditImage {
+  border-radius: 0;
+}
+.editPubliContent {
+  resize: none;
+  outline: 1px #152847ff;
+}
+
+.rightBorder .sendIcon {
+  &:hover {
+    cursor: pointer;
+    color: rgb(2, 190, 65);
+  }
 }

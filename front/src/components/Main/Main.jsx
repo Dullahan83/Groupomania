@@ -1,7 +1,6 @@
 import styles from '../Main/Main.scss'
 import PostsContainer from '../PostsContainer/PostsContainer'
 import Createpost from '../CreatePost/CreatePost'
-
 function Main() {
   return (
     <div className="mainWrapper">

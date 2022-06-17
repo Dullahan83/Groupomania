@@ -7,6 +7,9 @@ const StyledGlobalStyle = createGlobalStyle`
     body, h1, h2, h3, h4, p{
         margin: 0
     }
+    .index {
+        z-index: 1;
+    }
     @keyframes rotateLogo {
     0% {
         transform: rotate(0deg);
