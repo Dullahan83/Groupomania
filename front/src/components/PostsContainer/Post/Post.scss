@@ -67,14 +67,20 @@
   height: 1.5rem;
   border-bottom: 1px solid #e4e4e4;
   display: flex;
-  padding: 0.1rem 0.5rem;
+  padding: 0.3rem 0.5rem;
   font-size: 14px;
   align-items: center;
   width: 100%;
   justify-content: space-between;
+  @media screen and (min-width: 768px) {
+    padding: 0.1rem 0.5rem;
+  }
 }
 .infoPoster button {
-  margin-right: 1rem;
+  margin-right: 0.5rem;
+  @media screen and(min-width:768px) {
+    margin-right: 1rem;
+  }
 }
 .favIcon {
   padding-top: 0.3rem;

@@ -80,7 +80,7 @@ exports.delete = (req,res,next) =>{
                     return res.status(400).json({message: err.sqlMessage})
                 }
                 else{
-                    return res.status(403).json({message: "You don't have the required permissions"})
+                    return res.status(403).json({message: "Vous avez pas le droit d'effectuer cette action"})
                 }
             }
             else{
@@ -98,7 +98,7 @@ exports.delete = (req,res,next) =>{
                     return res.status(400).json({message: err.sqlMessage})
                 }
                 else{
-                    return res.status(403).json({message: "You don't have the required permissions"})
+                    return res.status(403).json({message: "Vous avez pas le droit d'effectuer cette action"})
                 }
             }
             
@@ -110,10 +110,14 @@ exports.modify = (req,res,next) =>{
     const userId = misc.getUserId(req)
     const hasRights = misc.getRank(req)
     database.query('SELECT * FROM publications WHERE id=?', [req.params.publication_id], function(err, results, fields){
-        const filename = results[0].image.split('images/')[1];
+        let filename
+        if(results[0].image != undefined){
+            filename= results[0].image.split('images/')[1];
+        }
+        
         if(results[0].users_id === userId || hasRights === 1){
             const host = `${req.protocol}://${req.get('host')}`
-            if(req.file !== undefined){
+            if(req.file !== undefined && filename != undefined){
                 fs.unlinkSync(`images/${filename}`)
                 const imgUrl = `images/${req.file.filename}`;
                 database.query('UPDATE `publications` SET title=?, image=?, content=? WHERE id=?',
@@ -145,7 +149,7 @@ exports.modify = (req,res,next) =>{
             return res.status(400).json({message: err.sqlMessage})
         }
         else{
-            return res.status(403).json({message: "You don't have the required permissions"})
+            return res.status(403).json({message: "Vous avez pas le droit d'effectuer cette action"})
         }  
     })  
 }
@@ -182,7 +186,7 @@ exports.like = (req,res,next) =>{
                         })
                     }
                     else{
-                        return res.status(500).json({message: "Oops, something went wrong"})
+                        return res.status(500).json({message: "Aie, aie, aie ... Il y a eu une couille dans le potage"})
                     }
                 })
             }
@@ -211,7 +215,7 @@ exports.like = (req,res,next) =>{
                 })
             }
             else if(results[0].value === 1){
-                return res.status(204).json({message:"Same vote already existing"})
+                return res.status(204).json({message:"Vous avez déjà fait le même vote"})
             }
         }
         else if(req.body.value === 0){
@@ -235,7 +239,7 @@ exports.like = (req,res,next) =>{
                 
             }
             else if(results[0].value === 0){
-                return res.status(204).json({message:"Same vote already existing"})
+                return res.status(204).json({message:"Vous avez déjà fait le même vote"})
             }
         }
         else if(err){
@@ -292,7 +296,7 @@ exports.addFavorites = (req, res, next) => {
                     return res.status(400).json({message: err.sqlMessage})
                 }
                 else{
-                    return res.status(201).json({message: "Added to bookmark"})
+                    return res.status(201).json({message: "Ajouté aux favoris"})
                 }
             })}
         }
@@ -300,10 +304,10 @@ exports.addFavorites = (req, res, next) => {
             return res.status(400).json({message: err.sqlMessage})
         }
         else if(results.length > 0){
-            return res.status(200).json({message: "Already bookmarked. Check profile to delete"})
+            return res.status(200).json({message: "Se trouve déjà dans vos favoris, pour le retirer allez dans votre profil"})
         }
         else{
-            return res.status(500).json({message: 'Oops, something went wrong'})
+            return res.status(500).json({message: 'Aie, aie, aie ... Il y a eu une couille dans le potage'})
         }
     })
     

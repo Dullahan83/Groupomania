@@ -21,12 +21,15 @@ input {
   margin: 0.6rem auto 0.6rem auto;
   width: 50%;
   color: white;
-  font-size: 1.2rem;
+  font-size: 0.9rem;
   border: none;
   box-shadow: 2px 2px 2px 1px rgb(175, 175, 175);
   background-color: #ba4d55ff;
   &:hover {
     cursor: pointer;
     box-shadow: 2px 2px 2px 1px rgb(129, 129, 129);
+  }
+  @media screen and(min-width: 768px) {
+    font-size: 1.2rem;
   }
 }

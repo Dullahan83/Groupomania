@@ -73,3 +73,12 @@
     color: #152847ff;
   }
 }
+.inputImgContainer {
+  display: flex;
+  margin-top: 1rem;
+  align-items: flex-start;
+}
+.inputImgContainer label {
+  margin-right: 1rem;
+  padding: 0.2rem 0;
+}

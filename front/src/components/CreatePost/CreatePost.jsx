@@ -7,6 +7,7 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 import Cookies from 'js-cookie'
 import { userContext } from '../../utils/context/userContext'
+import FileUploader from '../FileUploader'
 
 function Createpost() {
   const [makeAppear, setMakeAppear] = useState(false)
@@ -77,15 +78,15 @@ function Createpost() {
             onChange={(e) => setTitle(e.target.value)}
             value={title}
           />
-          <label htmlFor="postImg">
-            Image ou pas Image, telle est la question
-          </label>
-          <input
-            type="file"
-            name="postImg"
-            id="postImg"
-            onChange={(e) => setImage(e.target.files[0])}
-          />
+          <div className="inputImgContainer">
+            <label htmlFor="postImg">
+              Image ou pas Image, telle est la question
+            </label>
+            <FileUploader
+              handleFile={setImage}
+              classname="fileButtonInputSmall"
+            />
+          </div>
           <label htmlFor="postContent">Racontez nous une histoire</label>
           <textarea
             onClick={expand}

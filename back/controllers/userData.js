@@ -77,10 +77,10 @@ exports.modifyProfile = (req, res, next) => {
                     }
                     else{
                         console.log('ici')
-                        if(prevImgUrl){
+                        if(prevImgUrl && prevImgUrl !=='images/DefaultProfil.jpg'){
                             fs.unlinkSync(`${prevImgUrl}`)
                         }
-                        return res.status(200).json({message: "Successfully modified !"})
+                        return res.status(200).json({message: "Modification effectuée !"})
                     }
                 })
             }
@@ -88,7 +88,7 @@ exports.modifyProfile = (req, res, next) => {
                 return res.status(400).json({message: err.sqlMessage})
             }
             else{
-                return res.status(403).json({message: "You don't have the permissions"})
+                return res.status(403).json({message: "Vous n'avez pas les droits d'effectuer cette action !"})
             }
         }
         else if(prevImgUrl && req.file === undefined){
@@ -101,7 +101,7 @@ exports.modifyProfile = (req, res, next) => {
                     }
                     else{
                         console.log('ou là')
-                        return res.status(200).json({message: "Successfully modified !"})
+                        return res.status(200).json({message: "Modification effectuée !"})
                     }
                 })
             }
@@ -109,7 +109,7 @@ exports.modifyProfile = (req, res, next) => {
                 return res.status(400).json({message: err.sqlMessage})
             }
             else{
-                return res.status(403).json({message: "You don't have the permissions"})
+                return res.status(403).json({message: "Vous n'avez pas les droits d'effectuer cette action !"})
             }
         }
         else if(req.file === undefined){
@@ -124,7 +124,7 @@ exports.modifyProfile = (req, res, next) => {
                     }
                     else{
 
-                        return res.status(200).json({message: "Successfully modified !"})
+                        return res.status(200).json({message: "Modification effectuée !"})
                     }
                 })
             }
@@ -132,7 +132,7 @@ exports.modifyProfile = (req, res, next) => {
                 return res.status(400).json({message: err.sqlMessage})
             }
             else{
-                return res.status(403).json({message: "You don't have the permissions"})
+                return res.status(403).json({message: "Vous n'avez pas les droits d'effectuer cette action !"})
             }
         }
         else{
@@ -154,8 +154,11 @@ exports.deleteProfile = (req, res, next) => {
                     return res.status(400).json({message: err.sqlMessage})
                 }
                 else{
-                    fs.unlinkSync(imgPath)
-                    return res.status(200).json({message: "Successfully deleted !"})
+                    if(imgPath != undefined && imgPath !== 'images/DefaultProfil.jpg'){
+                        fs.unlinkSync(imgPath)
+                    }
+                    
+                    return res.status(200).json({message: "Supprimé avec succès"})
                 }
             })
         }
@@ -163,7 +166,7 @@ exports.deleteProfile = (req, res, next) => {
             return res.status(400).json({message: err.sqlMessage})
         }
         else{
-            return res.status(403).json({message: "You don't have the permissions"});
+            return res.status(403).json({message: "Vous n'avez pas les droits d'effectuer cette action !"});
         }
     })
 }
@@ -209,12 +212,12 @@ exports.Follow= (req, res, next) => {
                                 return res.status(400).json({message: err.sqlMessage})
                             }
                             else{
-                                return res.status(200).json({message: "Stalker c'est mal tu sais ?!"})
+                                return res.status(200).json({message: "Stalker c'est mal vous savez ?!"})
                             }
                         })
                     }
                     else if(results.length > 0){
-                        return res.status(200).json({message: "Tu stalke déjà cette personne !"})
+                        return res.status(200).json({message: "Vous stalkez déjà cette personne !"})
                     }
                     else{
                         return res.status(500).json({message: "Aie, aie, aie .... Il y a une couille dans le potage"})
@@ -239,7 +242,7 @@ exports.Unfollow = (req, res, next) => {
                     return res.status(400).json({message: err.sqlMessage})
                 }
                 else{
-                    return res.status(200).json({message: "Successfully deleted !"})
+                    return res.status(200).json({message: "Vous ne stalkez plus cette personne"})
                 }
             })
         }

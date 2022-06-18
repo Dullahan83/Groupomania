@@ -36,16 +36,17 @@ function Profile(props) {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [quickBio, setQuickBio] = useState('')
+  const [followList, setFollowList] = useState('')
   const [isEditing, setIsEditing] = useState(false)
-  const [profileInfos, setProfileInfos] = useState([])
-  const [postList, setPostList] = useState([])
-  const [bookmarkList, setBookmarkList] = useState([])
   const [revealPostList, setRevealPostList] = useState(false)
   const [revealBookmarks, setRevealBookmarks] = useState(false)
-  const [followList, setFollowList] = useState('')
   const [revealFollowList, setRevealFollowList] = useState(false)
   const [revealProfile, setRevealProfile] = useState(true)
   const [canDelete, setCanDelete] = useState(false)
+  const [profileInfos, setProfileInfos] = useState([])
+  const [postList, setPostList] = useState([])
+  const [bookmarkList, setBookmarkList] = useState([])
+
   const navigate = useNavigate()
   const imgUrl = `${host}${profileInfos.avatar}`
   const formData = new FormData()
@@ -152,7 +153,7 @@ function Profile(props) {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        toast.info(`C'est triste de vous vour partir`)
+        toast.info(`C'est triste de vous voir partir`)
         navigate('/')
         Cookies.remove('token')
         setIsOnline(false)
@@ -176,11 +177,13 @@ function Profile(props) {
     setRevealPostList(!revealPostList)
     setRevealBookmarks(false)
     setRevealFollowList(false)
+    setRevealProfile(true)
   }
   function handleBookmarks() {
     setRevealBookmarks(!revealBookmarks)
     setRevealPostList(false)
     setRevealFollowList(false)
+    setRevealProfile(true)
   }
   function handleFollowList() {
     setRevealFollowList(!revealFollowList)
@@ -222,30 +225,53 @@ function Profile(props) {
     <div id="profile">
       <div id="profileCard">
         <div className="onglets">
-          <AccountCircleIcon className="firstOnglet" onClick={handleProfile} />
-          <SmsIcon
-            className={revealPostList ? 'onglet activated' : 'onglet'}
-            onClick={handlePosts}
-          />
-          <BookmarksRoundedIcon
-            className={revealBookmarks ? 'onglet activated' : 'onglet'}
-            onClick={handleBookmarks}
-          />
-          <GroupRoundedIcon className="lastOnglet" onClick={handleFollowList} />
+          <button className="invisibleButtonSmall">
+            <AccountCircleIcon
+              className="firstOnglet"
+              onClick={handleProfile}
+            />
+          </button>
+          <button className="invisibleButtonSmall">
+            <SmsIcon
+              className={revealPostList ? 'onglet activated' : 'onglet'}
+              onClick={handlePosts}
+            />
+          </button>
+          <button className="invisibleButtonSmall">
+            <BookmarksRoundedIcon
+              className={revealBookmarks ? 'onglet activated' : 'onglet'}
+              onClick={handleBookmarks}
+            />
+          </button>
+          <button className="invisibleButtonSmallLast">
+            <GroupRoundedIcon
+              className="lastOnglet"
+              onClick={handleFollowList}
+            />
+          </button>
         </div>
         <div id="profileContainer">
           {username != usernameProfile && (
-            <KeyboardReturnOutlinedIcon
-              id="backToProfile"
-              onClick={handleBactToProfile}
-            />
+            <button className="invisibleButtonSmall">
+              <KeyboardReturnOutlinedIcon
+                id="backToProfile"
+                onClick={handleBactToProfile}
+              />
+            </button>
           )}
           {revealProfile ? (
             <>
               {userId === profileInfos.id ? (
-                <EditIcon className="editProfile" onClick={handleEdit} />
+                <button className="invisibleButtonSmall">
+                  <EditIcon className="editProfile" onClick={handleEdit} />
+                </button>
               ) : (
-                <AddLinkOutlinedIcon className="editProfile" onClick={Follow} />
+                <button className="invisibleButtonSmall">
+                  <AddLinkOutlinedIcon
+                    className="editProfile"
+                    onClick={Follow}
+                  />
+                </button>
               )}
               <div className="imgProfile">
                 <img
@@ -314,7 +340,8 @@ function Profile(props) {
                       <div className="userInfos">
                         <h4>Prénom:</h4>
                         <p className="firstName">
-                          {profileInfos.firstname != 'null'
+                          {profileInfos.firstname &&
+                          profileInfos.firstname != 'null'
                             ? profileInfos.firstname
                             : 'Non renseigné'}
                         </p>
@@ -322,7 +349,8 @@ function Profile(props) {
                       <div className="userInfos">
                         <h4>Nom:</h4>
                         <p className="lastName">
-                          {profileInfos.lastname != 'null'
+                          {profileInfos.lastname &&
+                          profileInfos.lastname != 'null'
                             ? profileInfos.lastname
                             : 'Non renseigné'}
                         </p>
@@ -330,7 +358,8 @@ function Profile(props) {
                       <div className="userInfos">
                         <h4>Bio:</h4>
                         <p className="quickBio">
-                          {profileInfos.presentation
+                          {profileInfos.presentation &&
+                          profileInfos.presentation != 'null'
                             ? profileInfos.presentation
                             : `Cet utilisateur ne s'est pas encore presenté`}
                         </p>

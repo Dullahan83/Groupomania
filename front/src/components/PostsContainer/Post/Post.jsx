@@ -17,6 +17,7 @@ import { userContext } from '../../../utils/context/userContext'
 import CreateComment from '../CreateComments/CreateComment'
 import CommentsContainer from './CommentsContainer/CommentsContainer'
 import { useNavigate } from 'react-router-dom'
+import FileUploader from '../../FileUploader'
 
 function Post(props) {
   const navigate = useNavigate()
@@ -26,7 +27,7 @@ function Post(props) {
   const [isCommenting, setIsCommenting] = useState(false)
   const [commentList, setCommentList] = useState([])
   const [edit, setEdit] = useState(false)
-  const [title, setTitle] = useState('')
+  const [title, setTitle] = useState(props.publi.title)
   const [image, setImage] = useState('')
   const [content, setContent] = useState('')
   const {
@@ -297,10 +298,9 @@ function Post(props) {
             {edit ? (
               <>
                 <img src={imgUrl} alt="" className="imgPubli" />
-                <input
-                  type="file"
-                  className="inputEditImage"
-                  onChange={(e) => setImage(e.target.files[0])}
+                <FileUploader
+                  handleFile={setImage}
+                  classname="fileButtonInput"
                 />
               </>
             ) : (

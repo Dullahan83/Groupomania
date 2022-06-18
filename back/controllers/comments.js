@@ -37,7 +37,7 @@ exports.modify = (req, res, next) => {
                     return res.status(400).json({message: err.sqlMessage})
                 }
                 else{
-                    return res.status(200).json({message: "Successfully modified"})
+                    return res.status(200).json({message: "Modification effectuée"})
                 }
             })
         }
@@ -45,7 +45,7 @@ exports.modify = (req, res, next) => {
             return res.status(400).json({message: err.sqlMessage})
         }
         else{
-            return res.status(403).json({message: "You don't have the permissions"})
+            return res.status(403).json({message: "Vous avez pas le droit d'effectuer cette action"})
         }
     })
 }
@@ -68,7 +68,7 @@ exports.delete = (req, res, next) => {
             return res.status(400).json({message: err.sqlMessage});
         }
         else{
-            return res.status(403).json({message: "You don't have the permissions"})
+            return res.status(403).json({message: "Vous avez pas le droit d'effectuer cette action"})
         }
     })
 }

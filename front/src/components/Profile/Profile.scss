@@ -54,6 +54,7 @@
   text-align: center;
   @media screen and(min-width: 768px) {
     margin: 1rem 0;
+    text-align: start;
   }
 }
 .profileContainer .labels {
@@ -95,10 +96,33 @@
     flex-direction: column;
     border-radius: 25px 0 0 25px;
     border-right: none;
+    border-bottom: 1px solid #ba4d55ff;
   }
 }
-.onglets .onglet {
+.onglets .invisibleButtonSmall {
+  border: none;
+  background-color: transparent;
+  color: #fff;
+  padding: 0;
+  margin: 0;
   border-right: 1px solid #ba4d55ff;
+  @media screen and(min-width: 768px) {
+    border-right: none;
+  }
+}
+.invisibleButtonSmallLast {
+  border: none;
+  background-color: transparent;
+  color: #fff;
+  padding: 0;
+  margin: 0;
+  @media screen and(min-width: 768px) {
+    border-bottom: 1px solid #ba4d55ff;
+    border-radius: 0 0 0 25px;
+  }
+}
+
+.onglets .onglet {
   @media screen and(min-width: 768px) {
     border-right: none;
     border-bottom: 1px solid #ba4d55ff;
@@ -115,7 +139,6 @@
   }
 }
 .onglets .firstOnglet {
-  border-right: 1px solid #ba4d55ff;
   @media screen and(min-width: 768px) {
     border-bottom: 1px solid #ba4d55ff;
     border-right: none;
@@ -208,6 +231,10 @@
   border-radius: 25px;
   background-color: #ba4d55ff;
   color: #fff;
+  font-size: 20px;
+  @media screen and (min-width: 768px) {
+    font-size: 24px;
+  }
 }
 #bookmarks {
   width: 100%;
@@ -220,9 +247,13 @@
   text-align: center;
   border: 2px solid #152847ff;
   width: 60%;
+  font-size: 20px;
   border-radius: 25px;
   background-color: #ba4d55ff;
   color: #fff;
+  @media screen and (min-width: 768px) {
+    font-size: 24px;
+  }
 }
 .postContainer {
   width: 100%;
@@ -253,6 +284,7 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  text-align: center;
 }
 #confirmButton {
   margin: 1rem 0;
@@ -304,4 +336,10 @@
 .userInfos h4 {
   color: #152847ff;
   min-width: 6rem;
+}
+.invisibleButtonSmall {
+  border: none;
+  background-color: transparent;
+  color: #fff;
+  width: fit-content;
 }

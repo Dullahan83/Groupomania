@@ -18,10 +18,10 @@ exports.signup = (req, res, next) =>{
                         return res.status(409).json({message: err.sqlMessage})
                     }
                     else{
-                        return res.status(500).json({message: "Unknown error"})
+                        return res.status(500).json({message: "Aie, aie, aie ... Il y a eu une couille dans le potage"})
                     }
                 }else{
-                    return res.status(200).json({message: "User successfully created"})
+                    return res.status(200).json({message: "Utilisateur crée avec succès"})
                 }
             }
     )})
@@ -47,8 +47,7 @@ exports.login = (req, res, next) =>{
             .catch(error => res.status(500).json({error}));
         }
         else{
-            return res.status(404).json({message: "Mail not found"})
-            console.log("Erreur: adresse mail non reconnue !")
+            return res.status(404).json({message: "Adresse mail non reconnue, peut être une faute de frappe ? "})
         }
     })         
 };
