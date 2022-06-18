@@ -2,7 +2,7 @@ import Auth from './pages/Auth/Auth'
 import Home from './pages/Home/Home'
 import ProfilePage from './pages/Profile/ProfilePage'
 import GlobalStyle from './utils/style/GlobalStyle'
-import { ToastContainer } from 'react-toastify'
+import { ToastContainer, Zoom } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { userContext } from './utils/context/userContext'
 import { decodeToken } from 'react-jwt'
@@ -68,7 +68,18 @@ function App() {
           </Routes>
         </Router>
       </userContext.Provider>
-      <ToastContainer />
+      <ToastContainer
+        position="top-right"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover
+        transition={Zoom}
+      />
     </div>
   )
 }
