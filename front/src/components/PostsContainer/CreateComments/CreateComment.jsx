@@ -24,7 +24,7 @@ function CreateComment(props) {
           props.isCommenting(false)
           setContent('')
           setRefreshPubli(true)
-          toast.success("Hope it's not a salty one")
+          toast.success('Et un commentaire, un !')
         })
         .catch((err) => {
           if (typeof err.response.data.message === 'string') {
@@ -34,7 +34,7 @@ function CreateComment(props) {
           }
         })
     } else {
-      toast.error("Can't post an empty comment")
+      toast.error('Le commentaire ne peux être vide !')
     }
     setRefreshPubli(false)
   }

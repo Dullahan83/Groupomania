@@ -22,7 +22,7 @@ function Comment(props) {
         { headers: { Authorization: `Bearer ${token}` } }
       )
       .then((res) => {
-        toast.success('Comment successfully deleted')
+        toast.success('Commentaire supprimé !')
         setRefreshPubli(true)
       })
       .catch((err) => {
@@ -45,7 +45,7 @@ function Comment(props) {
         { headers: { Authorization: `Bearer ${token}` } }
       )
       .then((res) => {
-        toast.success('Comment successfully modified')
+        toast.success('Commentaire modifié !')
         setRefreshPubli(true)
         setIsEditing(false)
       })

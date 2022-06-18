@@ -62,7 +62,7 @@ function Post(props) {
           setTitle('')
           setImage('')
           setContent('')
-          toast.success('New publication posted')
+          toast.success('Nouvelle publication postée')
           setRefreshPubli(true)
         })
         .catch((err) => {
@@ -74,7 +74,7 @@ function Post(props) {
         })
       setRefreshPubli(false)
     } else {
-      toast.error(`Publication title can't be empty`)
+      toast.error(`Manquerait pas un titre, là ?!`)
     }
 
     e.preventDefault()
@@ -137,7 +137,7 @@ function Post(props) {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        toast.success('Publication successfully deleted')
+        toast.success('Publication supprimée')
         setRefreshPubli(true)
       })
       .catch((err) => {
@@ -207,7 +207,7 @@ function Post(props) {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res) => {
-          toast.success('Successfully modified')
+          toast.success('Modifié !')
           setEdit(false)
           setRefreshPubli(true)
         })
@@ -220,7 +220,7 @@ function Post(props) {
         })
       setRefreshPubli(false)
     } else {
-      toast.error(`Don't forget the title`)
+      toast.error(`N'oubliez pas le titre !`)
     }
   }
   function removeFav() {

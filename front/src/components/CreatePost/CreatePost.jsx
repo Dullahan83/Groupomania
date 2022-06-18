@@ -45,7 +45,7 @@ function Createpost() {
           setTitle('')
           setImage('')
           setContent('')
-          toast.success('New publication posted')
+          toast.success('Publication postée')
           setRefreshPubli(true)
         })
         .catch((err) => {
@@ -57,7 +57,7 @@ function Createpost() {
         })
       setRefreshPubli(false)
     } else {
-      toast.error('This new publication needs a title')
+      toast.error('Un titre est obligatoire')
     }
 
     e.preventDefault()

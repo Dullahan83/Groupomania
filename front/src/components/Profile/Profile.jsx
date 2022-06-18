@@ -128,7 +128,7 @@ function Profile(props) {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        toast.success('Profile edited successfully')
+        toast.success('Profil édité !')
         setIsEditing(false)
         setFirstName('')
         setLastName('')

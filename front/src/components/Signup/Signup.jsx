@@ -22,7 +22,7 @@ function Signup(props) {
           password: password,
         })
         .then((res) => {
-          toast.success('Here you go, just Sign-In now :)')
+          toast.success(`Plus qu'à vous connecter maintenant`)
           props.toggle(true)
         })
         .catch((err) => {
@@ -33,7 +33,7 @@ function Signup(props) {
           }
         })
     } else {
-      toast.error('Password confirmation failed')
+      toast.error('Vous avez pas entré le même mot de passe')
     }
     e.preventDefault()
   }
