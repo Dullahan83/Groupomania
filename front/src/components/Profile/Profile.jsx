@@ -1,4 +1,4 @@
-import styles from '../Profile/Profile.scss'
+import '../Profile/Profile.scss'
 import defaultPp from '../../assets/DefaultProfil.jpg'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import SmsIcon from '@mui/icons-material/Sms'
@@ -9,6 +9,7 @@ import EditIcon from '@mui/icons-material/EditOutlined'
 import SendIcon from '@mui/icons-material/Send'
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined'
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
+import KeyboardReturnOutlinedIcon from '@mui/icons-material/KeyboardReturnOutlined'
 import axios from 'axios'
 import { useContext, useEffect, useState } from 'react'
 import { userContext } from '../../utils/context/userContext'
@@ -16,6 +17,7 @@ import { toast } from 'react-toastify'
 import Post from '../PostsContainer/Post/Post'
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
+import FollowedPeople from './Follow/Follow'
 function Profile(props) {
   const url = new URL(window.location.href)
   const {
@@ -42,6 +44,7 @@ function Profile(props) {
   const [revealBookmarks, setRevealBookmarks] = useState(false)
   const [followList, setFollowList] = useState('')
   const [revealFollowList, setRevealFollowList] = useState(false)
+  const [revealProfile, setRevealProfile] = useState(true)
   const [canDelete, setCanDelete] = useState(false)
   const navigate = useNavigate()
   const imgUrl = `${host}${profileInfos.avatar}`
@@ -56,8 +59,7 @@ function Profile(props) {
     'presentation',
     quickBio ? quickBio : profileInfos.presentation
   )
-  console.log(profileInfos)
-  console.log(followList)
+
   function getUserProfile() {
     axios
       .get(`${host}api/profile/${usernameProfile}`, {
@@ -106,7 +108,6 @@ function Profile(props) {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        console.log(res)
         setFollowList(res.data)
       })
       .catch((err) => {
@@ -165,6 +166,12 @@ function Profile(props) {
         }
       })
   }
+  function handleProfile() {
+    setRevealProfile(true)
+    setRevealBookmarks(false)
+    setRevealFollowList(false)
+    setRevealPostList(false)
+  }
   function handlePosts() {
     setRevealPostList(!revealPostList)
     setRevealBookmarks(false)
@@ -176,10 +183,12 @@ function Profile(props) {
     setRevealFollowList(false)
   }
   function handleFollowList() {
-    setRevealFollowList(true)
-    setBookmarkList(false)
-    setPostList(false)
+    setRevealFollowList(!revealFollowList)
+    setRevealBookmarks(false)
+    setRevealPostList(false)
+    setRevealProfile(!revealProfile)
   }
+  console.log(followList)
   function Follow() {
     axios
       .post(
@@ -190,7 +199,6 @@ function Profile(props) {
         }
       )
       .then((res) => {
-        console.log(res)
         toast.success(res.data.message)
       })
       .catch((err) => {
@@ -201,7 +209,11 @@ function Profile(props) {
         }
       })
   }
-
+  function handleBactToProfile() {
+    navigate(`/profile/${username}`)
+    setRevealProfile(true)
+    setRefreshPubli(!refreshPubli)
+  }
   useEffect(() => {
     getUserProfile()
   }, [refreshPubli])
@@ -210,7 +222,7 @@ function Profile(props) {
     <div id="profile">
       <div id="profileCard">
         <div className="onglets">
-          <AccountCircleIcon className="firstOnglet" />
+          <AccountCircleIcon className="firstOnglet" onClick={handleProfile} />
           <SmsIcon
             className={revealPostList ? 'onglet activated' : 'onglet'}
             onClick={handlePosts}
@@ -219,122 +231,156 @@ function Profile(props) {
             className={revealBookmarks ? 'onglet activated' : 'onglet'}
             onClick={handleBookmarks}
           />
-          <GroupRoundedIcon className="lastOnglet" />
+          <GroupRoundedIcon className="lastOnglet" onClick={handleFollowList} />
         </div>
         <div id="profileContainer">
-          {userId === profileInfos.id ? (
-            <EditIcon className="editProfile" onClick={handleEdit} />
-          ) : (
-            <AddLinkOutlinedIcon className="editProfile" onClick={Follow} />
-          )}
-          <div className="imgProfile">
-            <img
-              src={profileInfos.avatar != undefined ? imgUrl : defaultPp}
-              alt=""
+          {username != usernameProfile && (
+            <KeyboardReturnOutlinedIcon
+              id="backToProfile"
+              onClick={handleBactToProfile}
             />
-            <h2>{usernameProfile}</h2>
-          </div>
-
-          <div className="profileFields">
-            {isEditing ? (
-              <div className="formProfile">
-                <div>
-                  <label></label>
-                  <input
-                    type="file"
-                    onChange={(e) => setProfilePicture(e.target.files[0])}
-                    name="image"
-                  />
-                </div>
-
-                <div className="profileInputs">
-                  <label className="inputLabels" htmlFor="firstName">
-                    First Name:
-                  </label>
-                  <input
-                    name="firstName"
-                    defaultValue={profileInfos.firstname}
-                    onChange={(e) => {
-                      setFirstName(e.target.value)
-                    }}
-                  />
-                </div>
-                <div className="profileInputs">
-                  <label className="inputLabels" htmlFor="lastName">
-                    Last Name:
-                  </label>
-                  <input
-                    name="lastName"
-                    defaultValue={profileInfos.lastname}
-                    onChange={(e) => {
-                      setLastName(e.target.value)
-                    }}
-                  />
-                </div>
-                <div className="profileInputs">
-                  <label className="inputLabels" htmlFor="quickBio">
-                    Quick Bio:
-                  </label>
-                  <textarea
-                    name="quickBio"
-                    rows="5"
-                    defaultValue={profileInfos.presentation}
-                    onChange={(e) => {
-                      setQuickBio(e.target.value)
-                    }}
-                  />
-                </div>
-                <button>
-                  <SendIcon id="sendIcon" onClick={handleSubmit} />
-                </button>
-              </div>
-            ) : (
-              <>
-                <div className="labels">
-                  <h4>First Name:</h4>
-                  <h4>Last Name:</h4>
-                  <h4>Quick Bio:</h4>
-                </div>
-                <div className="userInfos">
-                  <p className="firstName">
-                    {profileInfos.firstname != 'null'
-                      ? profileInfos.firstname
-                      : 'Non renseigné'}
-                  </p>
-                  <p className="lastName">
-                    {profileInfos.lastname != 'null'
-                      ? profileInfos.lastname
-                      : 'Non renseigné'}
-                  </p>
-                  <p className="quickBio">
-                    {profileInfos.presentation
-                      ? profileInfos.presentation
-                      : `Cet utilisateur ne s'est pas encore presenté`}
-                  </p>
-                </div>
-              </>
-            )}
-          </div>
-          {!isEditing && userId === profileInfos.id && (
-            <button id="deleteButton" onClick={handleDelete}>
-              Supprimer le profil
-            </button>
           )}
-          {canDelete && (
-            <div id="confirmDelete">
-              <p>
-                Cette action est irreversible, êtes vous certain de votre choix
-                ?
-              </p>
-              <div id="confirmButton">
-                <button id="confirmationButton" onClick={deleteProfile}>
-                  <CheckOutlinedIcon />
-                </button>
-                <button id="backButton" onClick={handleDelete}>
-                  <CloseOutlinedIcon />
-                </button>
+          {revealProfile ? (
+            <>
+              {userId === profileInfos.id ? (
+                <EditIcon className="editProfile" onClick={handleEdit} />
+              ) : (
+                <AddLinkOutlinedIcon className="editProfile" onClick={Follow} />
+              )}
+              <div className="imgProfile">
+                <img
+                  src={profileInfos.avatar != undefined ? imgUrl : defaultPp}
+                  alt=""
+                />
+                <h2>{usernameProfile}</h2>
               </div>
-            </div>
+
+              <div className="profileFields">
+                {isEditing ? (
+                  <div className="formProfile">
+                    <div>
+                      <label></label>
+                      <input
+                        type="file"
+                        onChange={(e) => setProfilePicture(e.target.files[0])}
+                        name="image"
+                      />
+                    </div>
+
+                    <div className="profileInputs">
+                      <label className="inputLabels" htmlFor="firstName">
+                        Prénom:
+                      </label>
+                      <input
+                        name="firstName"
+                        defaultValue={profileInfos.firstname}
+                        onChange={(e) => {
+                          setFirstName(e.target.value)
+                        }}
+                      />
+                    </div>
+                    <div className="profileInputs">
+                      <label className="inputLabels" htmlFor="lastName">
+                        Nom:
+                      </label>
+                      <input
+                        name="lastName"
+                        defaultValue={profileInfos.lastname}
+                        onChange={(e) => {
+                          setLastName(e.target.value)
+                        }}
+                      />
+                    </div>
+                    <div className="profileInputs">
+                      <label className="inputLabels" htmlFor="quickBio">
+                        Présentation:
+                      </label>
+                      <textarea
+                        name="quickBio"
+                        rows="5"
+                        defaultValue={profileInfos.presentation}
+                        onChange={(e) => {
+                          setQuickBio(e.target.value)
+                        }}
+                      />
+                    </div>
+                    <button>
+                      <SendIcon id="sendIcon" onClick={handleSubmit} />
+                    </button>
+                  </div>
+                ) : (
+                  <>
+                    <div className="labels">
+                      <div className="userInfos">
+                        <h4>Prénom:</h4>
+                        <p className="firstName">
+                          {profileInfos.firstname != 'null'
+                            ? profileInfos.firstname
+                            : 'Non renseigné'}
+                        </p>
+                      </div>
+                      <div className="userInfos">
+                        <h4>Nom:</h4>
+                        <p className="lastName">
+                          {profileInfos.lastname != 'null'
+                            ? profileInfos.lastname
+                            : 'Non renseigné'}
+                        </p>
+                      </div>
+                      <div className="userInfos">
+                        <h4>Bio:</h4>
+                        <p className="quickBio">
+                          {profileInfos.presentation
+                            ? profileInfos.presentation
+                            : `Cet utilisateur ne s'est pas encore presenté`}
+                        </p>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+              {!isEditing && userId === profileInfos.id && (
+                <button id="deleteButton" onClick={handleDelete}>
+                  Supprimer le profil
+                </button>
+              )}
+              {canDelete && (
+                <div id="confirmDelete">
+                  <p>
+                    Cette action est irreversible, êtes vous certain de votre
+                    choix ?
+                  </p>
+                  <div id="confirmButton">
+                    <button id="confirmationButton" onClick={deleteProfile}>
+                      <CheckOutlinedIcon />
+                    </button>
+                    <button id="backButton" onClick={handleDelete}>
+                      <CloseOutlinedIcon />
+                    </button>
+                  </div>
+                </div>
+              )}
+            </>
+          ) : (
+            <>
+              <div className="followListContainer">
+                <h3>
+                  {username === usernameProfile
+                    ? 'Personnes suivies'
+                    : `Personnes suivies par ${usernameProfile}`}
+                </h3>
+                <div className="followList">
+                  {followList.length > 0 &&
+                    followList.map((follow) => (
+                      <FollowedPeople
+                        key={follow.id}
+                        username={follow.username}
+                        profile={setRevealProfile}
+                      />
+                    ))}
+                </div>
+              </div>
+            </>
           )}
         </div>
       </div>

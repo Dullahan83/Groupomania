@@ -68,7 +68,7 @@ function Createpost() {
       {makeAppear && (
         <form className="postForm">
           <CloseIcon className="closePostFormIcon" onClick={handleClick} />
-          <label htmlFor="postTitle">Title</label>
+          <label htmlFor="postTitle">Titre</label>
           <input
             type="text"
             placeholder="Title"
@@ -78,7 +78,7 @@ function Createpost() {
             value={title}
           />
           <label htmlFor="postImg">
-            Image or not Image, that is the question
+            Image ou pas Image, telle est la question
           </label>
           <input
             type="file"
@@ -86,7 +86,7 @@ function Createpost() {
             id="postImg"
             onChange={(e) => setImage(e.target.files[0])}
           />
-          <label htmlFor="postContent">Share something bro !</label>
+          <label htmlFor="postContent">Racontez nous une histoire</label>
           <textarea
             onClick={expand}
             name="postContent"

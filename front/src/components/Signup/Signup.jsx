@@ -44,7 +44,7 @@ function Signup(props) {
         onChange={(e) => setUsername(e.target.value)}
         className="username"
         type="text"
-        placeholder="Username"
+        placeholder="Nom d'utilisateur"
         value={username}
       />
       <input
@@ -56,17 +56,17 @@ function Signup(props) {
       <input
         onChange={(e) => setPassword(e.target.value)}
         type="password"
-        placeholder="Password"
+        placeholder="Mot de passe"
         value={password}
       />
       <input
         onChange={(e) => setConfirmPassword(e.target.value)}
         type="password"
-        placeholder="Confirm Password"
+        placeholder="Mot de passe"
         value={confirmPassword}
       />
       <button onClick={handleForm} className="signupButton">
-        Signup
+        S'inscrire
       </button>
     </form>
   )

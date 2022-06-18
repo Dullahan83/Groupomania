@@ -1,7 +1,6 @@
 #profile {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  align-content: center;
   margin-top: 5rem;
   flex-direction: column;
 }
@@ -10,19 +9,28 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  @media screen and (min-width: 768px) {
+    flex-direction: row;
+  }
 }
 
 #profileContainer {
   background-color: #ba4d55ff;
-  width: 60%;
+  width: 80%;
+  min-height: 20rem;
   display: flex;
   flex-direction: column;
   border-radius: 25px;
-  margin: 3rem 4rem 3rem 0;
   border: 2px solid #152847ff;
   padding: 1rem;
   color: #fff;
   position: relative;
+  margin-bottom: 2rem;
+  @media screen and (min-width: 768px) {
+    margin: 3rem 4rem 3rem 0;
+    width: 60%;
+  }
 }
 
 .imgProfile {
@@ -41,8 +49,12 @@
   margin-bottom: 0.5rem;
 }
 .userInfos p,
-.labels h4 {
-  margin: 1rem 0;
+.userInfos h4 {
+  margin: 0.4rem;
+  text-align: center;
+  @media screen and(min-width: 768px) {
+    margin: 1rem 0;
+  }
 }
 .profileContainer .labels {
   color: black;
@@ -55,27 +67,42 @@
 
 .userInfos {
   margin-left: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  @media screen and(min-width: 768px) {
+    flex-direction: row;
+  }
 }
 .labels {
   min-width: 6rem;
   margin: 0;
+  width: 100%;
   height: fit-content;
 }
 
 #profileCard .onglets {
   background-color: #152847ff;
-  border-radius: 25px 0 0 25px;
+  border-radius: 25px 25px 0 0;
   height: fit-content;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   color: white;
   border: 2px solid #ba4d55ff;
-  border-right: none;
+  border-bottom: none;
   align-items: center;
   position: relative;
+  @media screen and (min-width: 768px) {
+    flex-direction: column;
+    border-radius: 25px 0 0 25px;
+    border-right: none;
+  }
 }
 .onglets .onglet {
-  border-bottom: 1px solid #ba4d55ff;
+  border-right: 1px solid #ba4d55ff;
+  @media screen and(min-width: 768px) {
+    border-right: none;
+    border-bottom: 1px solid #ba4d55ff;
+  }
 }
 .onglets .firstOnglet,
 .onglets .onglet,
@@ -88,11 +115,18 @@
   }
 }
 .onglets .firstOnglet {
-  border-bottom: 1px solid #ba4d55ff;
+  border-right: 1px solid #ba4d55ff;
+  @media screen and(min-width: 768px) {
+    border-bottom: 1px solid #ba4d55ff;
+    border-right: none;
+  }
+
   border-radius: 25px 0 0 0;
 }
 .onglets .lastOnglet {
-  border-radius: 0 0 0 25px;
+  @media screen and(min-width: 768px) {
+    border-radius: 0 0 0 25px;
+  }
 }
 .quickBio {
   min-height: 8rem;
@@ -117,23 +151,35 @@
 .profileInputs {
   display: flex;
   align-items: center;
+  flex-direction: column;
   margin: 0.5rem 0;
+  @media screen and(min-width: 768px) {
+    flex-direction: row;
+  }
 }
 .inputLabels {
-  min-width: 6rem;
-  margin: 0 2rem 0 0;
   height: fit-content;
+  @media screen and(min-width: 768px) {
+    margin: 0 2rem 0 0;
+    min-width: 6rem;
+  }
 }
 .profileInputs input {
-  margin-right: 2rem;
   border: none;
+  @media screen and(min-width: 768px) {
+    margin-right: 2rem;
+  }
 }
 
 .profileInputs textarea {
-  width: 100%;
-  margin: 0 2rem 0 0.5rem;
+  width: 80%;
+  margin: 0;
   border-radius: 20px;
   padding: 1rem;
+  @media screen and(min-width: 768px) {
+    width: 100%;
+    margin: 0 2rem 0 0.5rem;
+  }
 }
 .formProfile button {
   margin-top: 0.8rem;
@@ -229,4 +275,33 @@
 }
 #backButton {
   background-color: rgb(250, 17, 17);
+}
+.followListContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
+.followListContainer h3 {
+  width: fit-content;
+  margin-bottom: 1rem;
+}
+
+.followList {
+  width: 85%;
+  background-color: white;
+  min-height: 17rem;
+  border-radius: 20px;
+  margin-bottom: 1rem;
+}
+#backToProfile {
+  font-size: 30px;
+  &:hover {
+    cursor: pointer;
+    color: #152847ff;
+  }
+}
+.userInfos h4 {
+  color: #152847ff;
+  min-width: 6rem;
 }

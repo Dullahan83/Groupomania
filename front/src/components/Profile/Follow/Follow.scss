@@ -1,0 +1,22 @@
+.followContainer {
+  color: black;
+  height: 3rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.followContainer p {
+  margin-left: 1rem;
+  text-decoration: underline;
+  &:hover {
+    cursor: pointer;
+  }
+}
+.deleteFollow {
+  margin-right: 1rem;
+  color: red;
+  &:hover {
+    cursor: pointer;
+  }
+}

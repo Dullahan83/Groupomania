@@ -17,16 +17,33 @@ nav {
   align-items: center;
   display: flex;
   flex-direction: row;
-  font-size: 30px;
+  font-size: 20px;
   font-weight: 800;
   width: 22%;
   text-transform: uppercase;
+  @media screen and (max-width: 400px) {
+    p {
+      display: none;
+    }
+  }
+  @media screen and (min-width: 767px) {
+    font-size: 30px;
+  }
 }
 .logoWrapper img {
+  height: 60px;
+  width: 50px;
   border-radius: 50%;
-  height: 80px;
-  width: 70px;
   margin: 0 6% 0 15%;
+  animation: rotateLogo linear 30s infinite;
+  @media screen and (max-width: 400px) {
+    margin-left: 3rem;
+  }
+  @media screen and(min-width: 768px) {
+    height: 80px;
+    width: 70px;
+  }
+
   animation: rotateLogo linear 30s infinite;
 }
 
@@ -37,14 +54,27 @@ ul {
   list-style: none;
   width: fit-content;
   text-align: center;
+  flex-direction: column;
+  @media screen and (max-width: 767px) {
+  }
+  @media screen and (min-width: 767px) {
+    flex-direction: row;
+  }
 }
 
 ul li {
   width: fit-content;
-  margin-left: 2rem;
-  font-size: 18px;
+  margin-top: 0.5rem;
+  font-size: 16px;
   &:hover {
     cursor: pointer;
     color: #ba4d55ff;
+  }
+  @media screen and (max-width: 767px) {
+  }
+  @media screen and (min-width: 767px) {
+    font-size: 18px;
+    margin-left: 2rem;
+    margin-top: 0;
   }
 }

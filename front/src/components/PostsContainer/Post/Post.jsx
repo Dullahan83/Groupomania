@@ -267,7 +267,7 @@ function Post(props) {
         <div className="publiContainer">
           <div className="infoPoster">
             <p>
-              Posted by{' '}
+              Posté par{' '}
               <span className="usernameLink" onClick={handleRedirect}>
                 {props.publi.username}
               </span>

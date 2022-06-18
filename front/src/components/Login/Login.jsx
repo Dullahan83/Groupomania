@@ -47,11 +47,11 @@ function Login() {
       <input
         onChange={(e) => setPassword(e.target.value)}
         type="password"
-        placeholder="password"
+        placeholder="Mot de passe"
         value={password}
       />
       <button onClick={handleForm} className="loginButton">
-        Login
+        Connection
       </button>
     </form>
   )

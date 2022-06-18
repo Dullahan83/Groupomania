@@ -30,19 +30,19 @@ function Auth() {
         {toggle ? <Signup toggle={handleClick} /> : <Login />}
         {!toggle ? (
           <p>
-            Not a member ?
+            Pas encore membre ?
             <button onClick={handleClick} id="toggleButton">
-              Sign-Up
+              Inscris-toi
             </button>
-            now
+            !
           </p>
         ) : (
           <p>
-            Already a member ? Just
+            Déjà inscris ? Connecte toi
             <button onClick={handleClick} id="toggleButton">
-              Sign-In
+              ICI
             </button>
-            now
+            !
           </p>
         )}
       </div>

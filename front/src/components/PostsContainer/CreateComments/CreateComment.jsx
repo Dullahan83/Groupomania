@@ -46,7 +46,7 @@ function CreateComment(props) {
           rows="3"
           onChange={(e) => setContent(e.target.value)}
           value={content}
-          placeholder="Type here"
+          placeholder="Ecrivez ici ..."
         />
         <div onClick={handleSubmit} className="sendIconContainer">
           <SendIcon className="sendIcon" />

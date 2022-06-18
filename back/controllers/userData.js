@@ -176,7 +176,7 @@ exports.getUserFollowed = (req, res, next) => {
         }
         else{
             profileId = results[0].id
-            database.query('SELECT users.username from users INNER JOIN follows ON follows.followed_id=users.id  WHERE follows.users_id=?',
+            database.query('SELECT u.username, f.id from users as u INNER JOIN follows as f ON f.followed_id=u.id  WHERE f.users_id=?',
             [profileId],function(err, results, fields){
                 if(err){
                     return res.status(400).json({message: err.sqlMessage})
@@ -198,28 +198,29 @@ exports.Follow= (req, res, next) => {
         }
         else{
             profileId = results[0].id
-            database.query('SELECT * FROM follows WHERE users_id=? AND followed_id=?',[userId, profileId], function(err,results, fields){
-                if(err){
-                   return res.status(400).json({message: err.sqlMessage})
-                }
-                else if(results.length === 0){
-                    database.query('INSERT INTO follows(users_id, followed_id)VALUES(?, ?)',[userId, profileId], function(err, results, fields){
-                        if(err){
-                            return res.status(400).json({message: err.sqlMessage})
-                        }
-                        else{
-                            return res.status(200).json({message: "Stalker c'est mal tu sais ?!"})
-                        }
-                    })
-                }
-                else if(results.length > 0){
-                    return res.status(200).json({message: "Tu stalke déjà cette personne !"})
-                }
-                else{
-                    return res.status(500).json({message: "Aie, aie, aie .... Il y a une couille dans le potage"})
-                }
-            })
-            
+            if(userId != profileId){
+                database.query('SELECT * FROM follows WHERE users_id=? AND followed_id=?',[userId, profileId], function(err,results, fields){
+                    if(err){
+                    return res.status(400).json({message: err.sqlMessage})
+                    }
+                    else if(results.length === 0){
+                        database.query('INSERT INTO follows(users_id, followed_id)VALUES(?, ?)',[userId, profileId], function(err, results, fields){
+                            if(err){
+                                return res.status(400).json({message: err.sqlMessage})
+                            }
+                            else{
+                                return res.status(200).json({message: "Stalker c'est mal tu sais ?!"})
+                            }
+                        })
+                    }
+                    else if(results.length > 0){
+                        return res.status(200).json({message: "Tu stalke déjà cette personne !"})
+                    }
+                    else{
+                        return res.status(500).json({message: "Aie, aie, aie .... Il y a une couille dans le potage"})
+                    }
+                })
+            }
         }
     })
 }

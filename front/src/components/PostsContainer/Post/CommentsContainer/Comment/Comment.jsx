@@ -65,7 +65,7 @@ function Comment(props) {
         <div className="commentContainer">
           <div className="infoIcons">
             <p className="infoCommentPoster">
-              Posted by{' '}
+              Posté par{' '}
               <span className="usernameLink">
                 {' ' + props.comment.username}
               </span>
