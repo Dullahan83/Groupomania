@@ -191,7 +191,6 @@ function Profile(props) {
     setRevealPostList(false)
     setRevealProfile(!revealProfile)
   }
-  console.log(followList)
   function Follow() {
     axios
       .post(

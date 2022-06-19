@@ -8,7 +8,7 @@ function ProfilePage() {
       <ParticlesBackground />
       <div className="mainWrapper">
         <div className="welcomeMsg">
-          <h1>Welcome to our new social media network</h1>
+          <h1>Bienvenue sur notre nouveau réseau social</h1>
         </div>
         <div className="panels">
           <div className="leftPanel"></div>

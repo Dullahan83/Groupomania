@@ -9,7 +9,6 @@ function Follow(props) {
   const navigate = useNavigate()
   const { setRefreshPubli, refreshPubli, host, token, username } =
     useContext(userContext)
-  console.log(props)
   const url = new URL(window.location.href)
   const usernameProfile = url.pathname.split('/profile/')[1]
   function handleClick() {
