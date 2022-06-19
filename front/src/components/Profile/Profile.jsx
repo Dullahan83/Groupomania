@@ -132,7 +132,7 @@ function Profile(props) {
         setIsEditing(false)
         setFirstName('')
         setLastName('')
-        setProfilePicture('')
+        setProfilePicture(defaultPp)
         setRefreshPubli(true)
       })
       .catch((err) => {

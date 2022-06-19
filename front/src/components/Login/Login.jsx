@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './Login.scss'
+import './Login.scss'
 import { useState, useContext } from 'react'
 import axios from 'axios'
 import { toast } from 'react-toastify'

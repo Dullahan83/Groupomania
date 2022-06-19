@@ -1,7 +1,7 @@
 import SendIcon from '@mui/icons-material/Send'
 import axios from 'axios'
 import { useState } from 'react'
-import syles from './CreateComment.scss'
+import './CreateComment.scss'
 import Cookies from 'js-cookie'
 import { useContext } from 'react'
 import { userContext } from '../../../utils/context/userContext'

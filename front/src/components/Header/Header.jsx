@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import logo from '../../assets/icon-left-font-monochrome-white-logo.png'
-import styles from '../Header/Header.scss'
+import '../Header/Header.scss'
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import { userContext } from '../../utils/context/userContext'

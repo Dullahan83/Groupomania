@@ -5,19 +5,21 @@ import Header from '../../components/Header/Header'
 import Main from '../../components/Main/Main'
 import ParticlesBackground from '../../components/ParticlesBackground'
 import { userContext } from '../../utils/context/userContext'
-import styles from './Home.scss'
+import './Home.scss'
 
 function Home() {
-  const { setIsOnline } = useContext(userContext)
+  const { setIsOnline, isOnline, refreshPubli } = useContext(userContext)
   const navigate = useNavigate()
   useEffect(() => {
     setTimeout(() => {
-      navigate('/')
       setIsOnline(false)
       Cookies.remove('token')
+      !isOnline && navigate('/')
     }, 1000 * 60 * 60 * 2)
   }, [])
-
+  useEffect(() => {
+    !isOnline && navigate('/')
+  }, [refreshPubli])
   return (
     <div>
       <Header />

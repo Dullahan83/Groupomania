@@ -64,7 +64,6 @@ exports.modifyProfile = (req, res, next) => {
     database.query('SELECT * FROM users WHERE username=?', [req.params.username], function(err, results, fields){
         let profileId = results[0].id
         const prevImgUrl = results[0].avatar
-        console.log(prevImgUrl)
         const userId = misc.getUserId(req);
         if(req.file !== undefined){
             const imgUrl = `images/${req.file.filename}`;
@@ -76,9 +75,10 @@ exports.modifyProfile = (req, res, next) => {
                         return res.status(400).json({message: err.sqlMessage})
                     }
                     else{
-                        console.log('ici')
                         if(prevImgUrl && prevImgUrl !=='images/DefaultProfil.jpg'){
-                            fs.unlinkSync(`${prevImgUrl}`)
+                            if(fs.existsSync(prevImgUrl)){
+                            fs.unlinkSync(prevImgUrl)
+                        }
                         }
                         return res.status(200).json({message: "Modification effectuée !"})
                     }
@@ -100,7 +100,6 @@ exports.modifyProfile = (req, res, next) => {
                         return res.status(400).json({message: err.sqlMessage})
                     }
                     else{
-                        console.log('ou là')
                         return res.status(200).json({message: "Modification effectuée !"})
                     }
                 })
@@ -113,7 +112,6 @@ exports.modifyProfile = (req, res, next) => {
             }
         }
         else if(req.file === undefined){
-            console.log('On est là');
             const imgUrl = `images/DefaultProfil.jpg`;
             if(profileId === userId){
                 database.query('UPDATE users SET avatar=?, firstname=?, lastname=?, presentation=? WHERE id=?',
@@ -136,7 +134,6 @@ exports.modifyProfile = (req, res, next) => {
             }
         }
         else{
-            console.log("ça se passe ici")
             return res.status(500).json({message: err.sqlMessage})
         }
         
@@ -155,7 +152,9 @@ exports.deleteProfile = (req, res, next) => {
                 }
                 else{
                     if(imgPath != undefined && imgPath !== 'images/DefaultProfil.jpg'){
-                        fs.unlinkSync(imgPath)
+                        if(fs.existsSync(imgPath)){
+                            fs.unlinkSync(imgPath)
+                        }
                     }
                     
                     return res.status(200).json({message: "Supprimé avec succès"})
@@ -199,7 +198,7 @@ exports.Follow= (req, res, next) => {
         if(err){
             return res.status(400).json({message: err.sqlMessage})
         }
-        else{
+        else if(results.length > 0){
             profileId = results[0].id
             if(userId != profileId){
                 database.query('SELECT * FROM follows WHERE users_id=? AND followed_id=?',[userId, profileId], function(err,results, fields){
@@ -224,6 +223,9 @@ exports.Follow= (req, res, next) => {
                     }
                 })
             }
+        }
+        else{
+            res.status(404).json({message: 'Utilisateur inexistant'})
         }
     })
 }

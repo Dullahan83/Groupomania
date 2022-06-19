@@ -1,4 +1,4 @@
-import styles from './CreatePost.scss'
+import './CreatePost.scss'
 import AddIcon from '@mui/icons-material/Add'
 import SendIcon from '@mui/icons-material/Send'
 import CloseIcon from '@mui/icons-material/Close'

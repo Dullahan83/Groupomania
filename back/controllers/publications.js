@@ -20,20 +20,33 @@ exports.getAll = (req,res,next) =>{
 
 exports.create = (req,res,next) =>{
     const formatDate = misc.formatDate()
-    if(req.file !== undefined){
-        const imgUrl = `images/${req.file.filename}`;
-        if(req.body.content === undefined){
-            database.query('INSERT INTO `publications`(`title`, `image`, `created_at`, `users_id`)values(?, ?, ?,?)',[req.body.title, imgUrl, formatDate, req.body.userId], function(err, results, fields){
-                if(err){
-                    return res.status(400).json({message: err.sqlMessage})
-                }
-                else{
-                    return res.status(201).json({message: "Successfully created !"})
-                }
-            });
+
+    if(req.body.title != undefined){
+        if(req.file !== undefined){
+            const imgUrl = `images/${req.file.filename}`;
+            if(req.body.content === undefined){
+                database.query('INSERT INTO `publications`(`title`, `image`, `created_at`, `users_id`)values(?, ?, ?,?)',[req.body.title, imgUrl, formatDate, req.body.userId], function(err, results, fields){
+                    if(err){
+                        return res.status(400).json({message: err.sqlMessage})
+                    }
+                    else{
+                        return res.status(201).json({message: "Successfully created !"})
+                    }
+                });
+            }
+            else{
+                database.query('INSERT INTO `publications`(`title`, `image`, `content`, `created_at`, `users_id`)values(?, ?, ?, ?, ?)',[req.body.title, imgUrl,req.body.content, formatDate, req.body.userId], function(err, results, fields){
+                    if(err){
+                        return res.status(400).json({message: err.sqlMessage})
+                    }
+                    else{
+                        return res.status(201).json(results)
+                    }
+                });
+            }
         }
         else{
-            database.query('INSERT INTO `publications`(`title`, `image`, `content`, `created_at`, `users_id`)values(?, ?, ?, ?, ?)',[req.body.title, imgUrl,req.body.content, formatDate, req.body.userId], function(err, results, fields){
+            database.query('INSERT INTO `publications`(`title`, `content`, `created_at`, `users_id`)values(?, ?, ?, ?)',[req.body.title, req.body.content, formatDate, req.body.userId], function(err, results, fields){
                 if(err){
                     return res.status(400).json({message: err.sqlMessage})
                 }
@@ -44,14 +57,7 @@ exports.create = (req,res,next) =>{
         }
     }
     else{
-        database.query('INSERT INTO `publications`(`title`, `content`, `created_at`, `users_id`)values(?, ?, ?, ?)',[req.body.title, req.body.content, formatDate, req.body.userId], function(err, results, fields){
-            if(err){
-                return res.status(400).json({message: err.sqlMessage})
-            }
-            else{
-                return res.status(201).json(results)
-            }
-        });
+        return res.status(400).json({message : "Manquerait pas un titre là ?"})
     }
 }
 
@@ -67,11 +73,14 @@ exports.delete = (req,res,next) =>{
                 const filename = results[0].image.split('images/')[1];
                 if(results[0].users_id === userId || hasRights === 1){
                     database.query('DELETE FROM `publications` WHERE id=?', [req.params.publication_id], function(err, results, fields){
-                        fs.unlinkSync(`images/${filename}`)
+                        
                         if(err){
                             return res.status(400).json({message: err.sqlMessage})
                         }
                         else{
+                            if(fs.existsSync(`images/${filename}`)){
+                                fs.unlinkSync(`images/${filename}`)
+                            }
                             return res.status(204).json()
                         }
                     })
@@ -111,45 +120,67 @@ exports.modify = (req,res,next) =>{
     const hasRights = misc.getRank(req)
     database.query('SELECT * FROM publications WHERE id=?', [req.params.publication_id], function(err, results, fields){
         let filename
-        if(results[0].image != undefined){
-            filename= results[0].image.split('images/')[1];
-        }
-        
-        if(results[0].users_id === userId || hasRights === 1){
-            const host = `${req.protocol}://${req.get('host')}`
-            if(req.file !== undefined && filename != undefined){
-                fs.unlinkSync(`images/${filename}`)
-                const imgUrl = `images/${req.file.filename}`;
-                database.query('UPDATE `publications` SET title=?, image=?, content=? WHERE id=?',
-                [req.body.title, imgUrl, req.body.content, req.params.publication_id], 
-                function(err, results, fields){
-                    if(err){
-                        return res.status(400).json({message: err.sqlMessage})
-                    }
-                    else{
-                        return res.status(200).json(results)
-                    }
-                })
+        if(results.length > 0){
+            if(results[0].image != undefined){
+                filename= results[0].image.split('images/')[1];
+                console.log("Filename"  + filename)
+
             }
-            else{
-                database.query('UPDATE `publications` SET title=?, content=? WHERE id=?',
-                [req.body.title, req.body.content, req.params.publication_id], 
-                function(err, results, fields){
-                    if(err){
-                        return res.status(400).json({message: err.sqlMessage})
+            if(results[0].users_id === userId || hasRights === 1){
+                const host = `${req.protocol}://${req.get('host')}`
+                if(req.file !== undefined ){
+                    const imgUrl = `images/${req.file.filename}`;
+                    if(fs.existsSync(`images/${filename}`)){
+                        fs.unlinkSync(`images/${filename}`)
                     }
-                    else{
-                        return res.status(200).json(results)
-                    }
-                })
+                    console.log('Ici')
+                    database.query('UPDATE `publications` SET title=?, image=?, content=? WHERE id=?',
+                        [req.body.title, imgUrl, req.body.content, req.params.publication_id], 
+                        function(err, results, fields){
+                            if(err){
+                                console.log('la')
+                                return res.status(400).json({message: err.sqlMessage})
+                            }
+                            else{
+                                return res.status(200).json(results)
+                            }
+                        })        
+                    
+                }
+                else if(req.file !== undefined){
+                    const imgUrl = `images/${req.file.filename}`;
+                    database.query('UPDATE `publications` SET title=?, image=?, content=? WHERE id=?',
+                    [req.body.title, imgUrl, req.body.content, req.params.publication_id], 
+                    function(err, results, fields){
+                        if(err){
+                            return res.status(400).json({message: err.sqlMessage})
+                        }
+                        else{
+                            return res.status(200).json(results)
+                        }
+                    })
+                }
+                else{
+                    database.query('UPDATE `publications` SET title=?, content=? WHERE id=?',
+                    [req.body.title, req.body.content, req.params.publication_id], 
+                    function(err, results, fields){
+                        if(err){
+                            return res.status(400).json({message: err.sqlMessage})
+                        }
+                        else{
+                            return res.status(200).json(results)
+                        }
+                    })
+                }
+                
+                
             }
-            
         }
         else if(err){
             return res.status(400).json({message: err.sqlMessage})
         }
         else{
-            return res.status(403).json({message: "Vous avez pas le droit d'effectuer cette action"})
+            return res.status(403).json({message: "Cette publication n'existe plus"})
         }  
     })  
 }
@@ -320,7 +351,6 @@ exports.deleteBookmark = (req, res, next) => {
             return res.status(400).json({message: err.sqlMessage})
         }
         else{
-            console.log('Tout est ok')
             return res.status(204).json({message: 'Favori supprimé'})
         }
         

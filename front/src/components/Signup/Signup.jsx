@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import styles from './Signup.scss'
+import './Signup.scss'
 import VisiblePassword from '@mui/icons-material/RemoveRedEyeRounded'
 import InvisiblePassword from '@mui/icons-material/VisibilityOffRounded'
 import { useState } from 'react'

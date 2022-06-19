@@ -3,9 +3,7 @@ const env = require('dotenv')
 
 module.exports = (req, res, next) => {
     try{
-        console.log(req.headers)
         const token = req.headers.authorization.split(" ")[1];
-        console.log(token)
         const decodedToken = jsonWebToken.verify(token, process.env.jwtKey);
         const userId = decodedToken.userId;
         req.auth = {userId};

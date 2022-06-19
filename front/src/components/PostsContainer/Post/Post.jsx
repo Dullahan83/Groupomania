@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import styles from '../Post/Post.scss'
+import '../Post/Post.scss'
 import ThumbUpIcon from '@mui/icons-material/ThumbUp'
 import ThumbDownIcon from '@mui/icons-material/ThumbDown'
 import BookmarkRemoveOutlinedIcon from '@mui/icons-material/BookmarkRemoveOutlined'

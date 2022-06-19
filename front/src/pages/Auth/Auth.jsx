@@ -1,4 +1,4 @@
-import styles from './Auth.scss'
+import './Auth.scss'
 import LogoAlone from '../../assets/icon.png'
 import picture from '../../assets/Home-site-1-1024x488.png'
 import Signup from '../../components/Signup/Signup'

@@ -3,7 +3,7 @@ import Cookies from 'js-cookie'
 import { useContext, useEffect, useState } from 'react'
 import { userContext } from '../../../../utils/context/userContext'
 import Comment from './Comment/Comment'
-import styles from './CommentsContainer.scss'
+import './CommentsContainer.scss'
 
 function CommentsContainer(props) {
   const token = Cookies.get('token')
