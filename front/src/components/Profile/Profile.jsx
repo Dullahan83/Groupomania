@@ -30,6 +30,7 @@ function Profile(props) {
     userId,
     setIsOnline,
     setIsHome,
+    isOnline,
   } = useContext(userContext)
   const usernameProfile = url.pathname.split('/profile/')[1]
   const [profilePicture, setProfilePicture] = useState(defaultPp)
@@ -60,7 +61,9 @@ function Profile(props) {
     'presentation',
     quickBio ? quickBio : profileInfos.presentation
   )
-
+  useEffect(() => {
+    !isOnline && navigate('/')
+  }, [refreshPubli])
   function getUserProfile() {
     axios
       .get(`${host}api/profile/${usernameProfile}`, {

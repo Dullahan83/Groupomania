@@ -25,9 +25,10 @@ input {
   height: 2.5rem;
   border-radius: 25px;
   margin: 0.6rem auto 2rem auto;
-  width: 50%;
+  width: fit-content;
   color: white;
   font-size: 0.9rem;
+  padding: 0 1rem;
   border: none;
   box-shadow: 2px 2px 2px 1px rgb(175, 175, 175);
   background-color: #ba4d55ff;

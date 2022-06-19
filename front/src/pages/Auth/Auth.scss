@@ -6,6 +6,8 @@
 }
 .wrapper img {
   display: none;
+  filter: grayscale(100%);
+  position: relative;
   @media screen and (min-width: 768px) {
     display: flex;
     width: 60%;
@@ -13,7 +15,20 @@
     object-fit: cover;
   }
 }
+.banner {
+  display: none;
+  @media screen and (min-width: 768px) {
+    display: flex;
+    justify-content: center;
+    padding: 1.5rem 0;
+    position: absolute;
+    bottom: 0;
+    width: 60%;
+    background-color: rgba(186, 77, 84, 0.74);
+  }
+}
 .rightsideContainer img {
+  filter: none;
   height: 200px;
   width: 200px;
   color: #ba4d55ff;

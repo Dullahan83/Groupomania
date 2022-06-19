@@ -1,6 +1,7 @@
 import './Auth.scss'
 import LogoAlone from '../../assets/icon.png'
-import picture from '../../assets/Home-site-1-1024x488.png'
+import picture from '../../assets/926109.png'
+import bandeau from '../../assets/icon-left-font-monochrome-white.svg'
 import Signup from '../../components/Signup/Signup'
 import Login from '../../components/Login/Login'
 import { useState, useContext, useEffect } from 'react'
@@ -24,6 +25,9 @@ function Auth() {
   return (
     <div className="wrapper">
       <img src={picture} alt="groupomania" />
+      <div className="banner">
+        <img src={bandeau} alt="banner" />
+      </div>
       <div className="rightsideContainer">
         <img src={LogoAlone} alt="logo" />
         <h1>Groupomania</h1>
