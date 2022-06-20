@@ -9,7 +9,7 @@ import { userContext } from '../../utils/context/userContext'
 function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const { isOnline, setIsOnline } = useContext(userContext)
+  const { isOnline, setIsOnline, username } = useContext(userContext)
   const navigate = useNavigate()
 
   function handleForm(e) {
@@ -21,11 +21,13 @@ function Login() {
       .then((res) => {
         setIsOnline(true)
         Cookies.set('token', res.data.token, { expires: 0.5 })
-        toast.success('Bienvenue !')
+        toast.success(`Bienvenue ${username} !`)
         navigate('/home')
       })
       .catch((err) => {
-        if (typeof err.response.data.message === 'string') {
+        if (err.response.request.status == 429) {
+          toast.error(`Trop de tentatives, veuillez réessayer d'ici 15 minutes`)
+        } else if (typeof err.response.data.message === 'string') {
           toast.error(err.response.data.message)
         } else if (err.response.data.error) {
           toast.error(err.response.data.error)

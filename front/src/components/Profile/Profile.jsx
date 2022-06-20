@@ -1,4 +1,10 @@
 import '../Profile/Profile.scss'
+import { useNavigate } from 'react-router-dom'
+import { useContext, useEffect, useState } from 'react'
+import { userContext } from '../../utils/context/userContext'
+import { toast } from 'react-toastify'
+import axios from 'axios'
+
 import defaultPp from '../../assets/DefaultProfil.jpg'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import SmsIcon from '@mui/icons-material/Sms'
@@ -10,15 +16,12 @@ import SendIcon from '@mui/icons-material/Send'
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined'
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import KeyboardReturnOutlinedIcon from '@mui/icons-material/KeyboardReturnOutlined'
-import axios from 'axios'
-import { useContext, useEffect, useState } from 'react'
-import { userContext } from '../../utils/context/userContext'
-import { toast } from 'react-toastify'
 import Post from '../PostsContainer/Post/Post'
-import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import FollowedPeople from './Follow/Follow'
-function Profile(props) {
+import FileUploader from '../FileUploader'
+
+function Profile() {
   const url = new URL(window.location.href)
   const {
     token,
@@ -26,7 +29,6 @@ function Profile(props) {
     setRefreshPubli,
     username,
     host,
-    isHome,
     userId,
     setIsOnline,
     setIsHome,
@@ -286,12 +288,10 @@ function Profile(props) {
               <div className="profileFields">
                 {isEditing ? (
                   <div className="formProfile">
-                    <div>
-                      <label></label>
-                      <input
-                        type="file"
-                        onChange={(e) => setProfilePicture(e.target.files[0])}
-                        name="image"
+                    <div id="fileInputContainer">
+                      <FileUploader
+                        handleFile={setProfilePicture}
+                        classname="fileButtonInputProfile"
                       />
                     </div>
 

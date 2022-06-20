@@ -45,9 +45,39 @@
     cursor: pointer;
     background-color: #e4e4e4;
     box-shadow: 1px 1px 1px rgb(143, 143, 143);
+    color: #ba4d55ff;
+    border: 2px solid #152847;
   }
   @media screen and (min-width: 768px) {
     height: 2rem;
     width: 6rem;
+  }
+}
+.formProfile .fileButtonInputProfile {
+  align-items: center;
+  display: flex;
+  border-radius: 25px;
+  justify-content: center;
+  width: 6rem;
+  height: 2rem;
+  margin: 0.5rem 0 3rem 0;
+  padding: 1rem 0;
+  background-color: #152847;
+  border: 2px solid #fff;
+  color: #fff;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #e4e4e4;
+    box-shadow: 1px 1px 1px rgb(143, 143, 143);
+    color: #ba4d55ff;
+    border: 2px solid #152847;
+  }
+  @media screen and (min-width: 768px) {
+    height: 3rem;
+    width: 10rem;
+  }
+  .fileIcon {
+    font-size: 35px;
   }
 }

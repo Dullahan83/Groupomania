@@ -19,7 +19,13 @@ exports.create = (req, res, next) => {
     database.query('INSERT INTO comments(content, created_at, publications_id, users_id) VALUES(?, ?, ?, ?)',
     [req.body.content, formatDate, req.params.publication_id, userId], function(err, results, fields){
         if(err){
-            return res.status(400).json({message: err.sqlMessage})
+            if(err.errno == 1452){
+                return res.status(404).json({message: 'La publication visée a été supprimée'})
+            }
+            else{
+                return res.status(400).json({message: err.sqlMessage})
+            }
+            
         }
         else{
             return res.status(201).json(results)

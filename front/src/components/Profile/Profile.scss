@@ -37,7 +37,7 @@
   display: flex;
   width: 100%;
   align-items: center;
-  margin: 2rem 0;
+  margin: 2rem 0 0.5rem 0;
   flex-direction: column;
 }
 
@@ -182,6 +182,8 @@
 }
 .inputLabels {
   height: fit-content;
+  color: #152847ff;
+  font-weight: 800;
   @media screen and(min-width: 768px) {
     margin: 0 2rem 0 0;
     min-width: 6rem;
@@ -336,10 +338,15 @@
 .userInfos h4 {
   color: #152847ff;
   min-width: 6rem;
+  font-weight: 800;
 }
 .invisibleButtonSmall {
   border: none;
   background-color: transparent;
   color: #fff;
   width: fit-content;
+}
+#fileInputContainer {
+  display: flex;
+  justify-content: center;
 }

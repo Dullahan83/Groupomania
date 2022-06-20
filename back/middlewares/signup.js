@@ -9,7 +9,8 @@ let schema = yup.object().shape({
     Email: yup
     .string()
     .required()
-    .email(),
+    .email()
+    .min(6,'Une adresse mail aussi courte, vraiment ?'),
     Password: yup
     .string()
     .required()

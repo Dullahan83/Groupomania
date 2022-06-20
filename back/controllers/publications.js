@@ -20,7 +20,6 @@ exports.getAll = (req,res,next) =>{
 
 exports.create = (req,res,next) =>{
     const formatDate = misc.formatDate()
-
     if(req.body.title != undefined){
         if(req.file !== undefined){
             const imgUrl = `images/${req.file.filename}`;
@@ -73,7 +72,6 @@ exports.delete = (req,res,next) =>{
                 const filename = results[0].image.split('images/')[1];
                 if(results[0].users_id === userId || hasRights === 1){
                     database.query('DELETE FROM `publications` WHERE id=?', [req.params.publication_id], function(err, results, fields){
-                        
                         if(err){
                             return res.status(400).json({message: err.sqlMessage})
                         }
@@ -123,8 +121,6 @@ exports.modify = (req,res,next) =>{
         if(results.length > 0){
             if(results[0].image != undefined){
                 filename= results[0].image.split('images/')[1];
-                console.log("Filename"  + filename)
-
             }
             if(results[0].users_id === userId || hasRights === 1){
                 const host = `${req.protocol}://${req.get('host')}`
@@ -133,7 +129,6 @@ exports.modify = (req,res,next) =>{
                     if(fs.existsSync(`images/${filename}`)){
                         fs.unlinkSync(`images/${filename}`)
                     }
-                    console.log('Ici')
                     database.query('UPDATE `publications` SET title=?, image=?, content=? WHERE id=?',
                         [req.body.title, imgUrl, req.body.content, req.params.publication_id], 
                         function(err, results, fields){
@@ -145,7 +140,6 @@ exports.modify = (req,res,next) =>{
                                 return res.status(200).json(results)
                             }
                         })        
-                    
                 }
                 else if(req.file !== undefined){
                     const imgUrl = `images/${req.file.filename}`;
@@ -194,6 +188,9 @@ exports.like = (req,res,next) =>{
                 function(err, results, fields){
                     
                     if(err){
+                        if(err.errno == 1452){
+                            return res.status(404).json({message: 'La publication visée a été supprimée'})
+                        }
                         return res.status(401).json({message: err.sqlMessage})
                     }
                     else if(req.body.value === 1){
