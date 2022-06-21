@@ -6,7 +6,8 @@ const env = require('dotenv');
 const host = process.env.host
 
 exports.getAll = (req,res,next) =>{
-    database.query('SELECT p.*, u.username FROM publications AS p INNER JOIN users AS u WHERE p.users_id = u.id', function(err, results, fields){
+    const userId = misc.getUserId(req)
+    database.query('SELECT p.*, u.username,pv.value FROM publications AS p INNER JOIN users AS u  LEFT JOIN publications_votes as pv ON pv.publications_id=p.id AND pv.users_id=? WHERE p.users_id=u.id',[userId], function(err, results, fields){
         if (err) {
             return res.status(500).json({message: err.sqlMessage});
         }

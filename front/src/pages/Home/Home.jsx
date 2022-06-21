@@ -10,13 +10,7 @@ import './Home.scss'
 function Home() {
   const { setIsOnline, isOnline, refreshPubli } = useContext(userContext)
   const navigate = useNavigate()
-  useEffect(() => {
-    setTimeout(() => {
-      setIsOnline(false)
-      Cookies.remove('token')
-      !isOnline && navigate('/')
-    }, 1000 * 60 * 60 * 2)
-  }, [])
+
   useEffect(() => {
     !isOnline && navigate('/')
   }, [refreshPubli])

@@ -8,6 +8,7 @@ function PostsContainer() {
   const [publiList, setPubliList] = useState([])
   const token = Cookies.get('token')
   const headers = { Authorization: `Bearer ${token}` }
+
   const { refreshPubli, userId, setHost, host } = useContext(userContext)
   const getPosts = () => {
     if (userId != null) {

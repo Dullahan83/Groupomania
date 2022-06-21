@@ -248,6 +248,15 @@ function Post(props) {
   useEffect(() => {
     getComments()
   }, [refreshPubli])
+  useEffect(() => {
+    if (props.publi.value == 1) {
+      setHasLiked(true)
+      setHasDisliked(false)
+    } else if (props.publi.value == 0) {
+      setHasDisliked(true)
+      setHasLiked(false)
+    }
+  }, [])
   return (
     <div>
       <div className="publiWrapper">
