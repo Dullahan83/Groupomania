@@ -1,5 +1,6 @@
 import Auth from './pages/Auth/Auth'
 import Home from './pages/Home/Home'
+import Error from './pages/Error 404/Error'
 import ProfilePage from './pages/Profile/ProfilePage'
 import GlobalStyle from './utils/style/GlobalStyle'
 import { ToastContainer, Zoom } from 'react-toastify'
@@ -65,6 +66,7 @@ function App() {
               <Route path="/home" element={<Home />} />
               <Route path="/profile/:username" element={<ProfilePage />} />
             </Route>
+            <Route path="*" element={<Error />} />
           </Routes>
         </Router>
       </userContext.Provider>

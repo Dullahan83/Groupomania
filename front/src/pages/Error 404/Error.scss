@@ -1,0 +1,71 @@
+#errorContainer {
+  display: flex;
+  flex-direction: column-reverse;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000000;
+  background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+  align-items: center;
+  justify-content: center;
+  @media screen and (min-width: 768px) {
+    flex-direction: row;
+  }
+}
+#errorContainer #yodaImg {
+  display: none;
+
+  @media screen and (min-width: 768px) {
+    display: flex;
+    width: 50%;
+    height: 40%;
+    align-self: flex-end;
+    object-fit: fill;
+  }
+
+  @media screen and (min-width: 992px) {
+    width: 50%;
+    height: 60%;
+  }
+}
+#errorTxt {
+  height: 60%;
+  text-align: center;
+  padding: 3rem 0;
+  margin-bottom: 3rem;
+  width: 80%;
+  @media screen and (min-width: 768px) {
+    height: 40%;
+    text-align: center;
+    padding: 3rem 0;
+    margin-bottom: 3rem;
+    width: 50%;
+  }
+}
+#errorTxt h1 {
+  color: rgba(255, 233, 31, 0.849);
+}
+#errorTxt h2 {
+  color: #fff;
+}
+#errorTxt h1,
+#errorTxt h2 {
+  margin-bottom: 2rem;
+}
+#errorButton {
+  margin-top: 3rem;
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  background-color: transparent;
+  border: none;
+}
+#errorButton #dsImg {
+  margin: 0 auto 1rem auto;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  cursor: pointer;
+  &:hover {
+    box-shadow: 1px 1px 1px #00265f;
+  }
+}
