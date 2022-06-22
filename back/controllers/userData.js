@@ -6,7 +6,7 @@ const fs = require('fs');
 exports.getProfile = (req, res, next) => {
     database.query('SELECT id,username, avatar, presentation, firstname, lastname FROM `users` WHERE username=?',[req.params.username], function(err, results, fields){
         if(err){
-            return res.status(400).json({message: err.sqlMessage})
+            return res.status(404).json({message: "Cet utilisateur n'a pas été trouvé"})
         }
         else{
             return res.status(200).json(results[0])
@@ -18,7 +18,7 @@ exports.getUserPosts = (req, res, next) => {
     let profileId
     database.query('SELECT * FROM `users` WHERE username=?',[req.params.username], function(err, results, fields){
         if(err){
-            return res.status(400).json({message: err.sqlMessage})
+            return res.status(404).json({message: "Cet utilisateur n'a pas été trouvé"})
         }
         else{
             profileId = results[0].id
@@ -41,7 +41,7 @@ exports.getUserFavorites = (req, res, next) => {
     let profileId
     database.query('SELECT id FROM `users` WHERE username=?',[req.params.username], function(err, results, fields){
         if(err){
-            return res.status(400).json({message: err.sqlMessage})
+            return res.status(404).json({message: "Cet utilisateur n'a pas été trouvé"})
         }
         else{
             profileId = results[0].id
@@ -127,11 +127,14 @@ exports.modifyProfile = (req, res, next) => {
                 })
             }
             else if(err){
-                return res.status(400).json({message: err.sqlMessage})
+                return res.status(404).json({message: err.sqlMessage})
             }
             else{
                 return res.status(403).json({message: "Vous n'avez pas les droits d'effectuer cette action !"})
             }
+        }
+        else if(err){
+            return res.status(404).json({message: "Cet utilisateur n'a pas été trouvé"})
         }
         else{
             return res.status(500).json({message: err.sqlMessage})
@@ -162,7 +165,7 @@ exports.deleteProfile = (req, res, next) => {
             })
         }
         else if(err){
-            return res.status(400).json({message: err.sqlMessage})
+            return res.status(404).json({message: "Cet utilisateur n'a pas été trouvé"})
         }
         else{
             return res.status(403).json({message: "Vous n'avez pas les droits d'effectuer cette action !"});
@@ -174,7 +177,7 @@ exports.getUserFollowed = (req, res, next) => {
     let profileId
     database.query('SELECT * FROM `users` WHERE username=?',[req.params.username], function(err, results, fields){
         if(err){
-            return res.status(400).json({message: err.sqlMessage})
+            return res.status(404).json({message: "Cet utilisateur n'a pas été trouvé"})
         }
         else{
             profileId = results[0].id
@@ -196,7 +199,7 @@ exports.Follow= (req, res, next) => {
     const userId= misc.getUserId(req)
     database.query('SELECT id FROM users WHERE username=?',[req.params.username], function(err, results, fiels){
         if(err){
-            return res.status(400).json({message: err.sqlMessage})
+            return res.status(404).json({message: "Cet utilisateur n'a pas été trouvé"})
         }
         else if(results.length > 0){
             profileId = results[0].id
@@ -235,7 +238,7 @@ exports.Unfollow = (req, res, next) => {
     const userId = misc.getUserId(req)
     database.query('SELECT id FROM users WHERE username=?',[req.params.username], function(err, results, fiels){
         if(err){
-            return res.status(400).json({message: err.sqlMessage})
+            return res.status(404).json({message: "Cet utilisateur n'a pas été trouvé"})
         }
         else{
             profileId = results[0].id

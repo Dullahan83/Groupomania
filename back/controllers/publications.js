@@ -30,7 +30,7 @@ exports.create = (req,res,next) =>{
                         return res.status(400).json({message: err.sqlMessage})
                     }
                     else{
-                        return res.status(201).json({message: "Successfully created !"})
+                        return res.status(201).json({message: "Publication crée"})
                     }
                 });
             }
@@ -66,7 +66,7 @@ exports.delete = (req,res,next) =>{
     const hasRights = misc.getRank(req)
     database.query('SELECT * FROM `publications` WHERE id=?', [req.params.publication_id], function(err, results, fields){
         if(results.length === 0){
-            return res.status(500).json({message: "Oops, something went wrong ..."})
+            return res.status(500).json({message: "La publication visée n'existe plus, elle a probablement été supprimée"})
         }
         else{
             if(results[0].image !== null){
@@ -88,7 +88,7 @@ exports.delete = (req,res,next) =>{
                     return res.status(400).json({message: err.sqlMessage})
                 }
                 else{
-                    return res.status(403).json({message: "Vous avez pas le droit d'effectuer cette action"})
+                    return res.status(403).json({message: "Vous n'avez pas le droit d'effectuer cette action"})
                 }
             }
             else{
@@ -106,7 +106,7 @@ exports.delete = (req,res,next) =>{
                     return res.status(400).json({message: err.sqlMessage})
                 }
                 else{
-                    return res.status(403).json({message: "Vous avez pas le droit d'effectuer cette action"})
+                    return res.status(403).json({message: "Vous n'avez pas le droit d'effectuer cette action"})
                 }
             }
             
@@ -134,7 +134,6 @@ exports.modify = (req,res,next) =>{
                         [req.body.title, imgUrl, req.body.content, req.params.publication_id], 
                         function(err, results, fields){
                             if(err){
-                                console.log('la')
                                 return res.status(400).json({message: err.sqlMessage})
                             }
                             else{
@@ -322,7 +321,7 @@ exports.addFavorites = (req, res, next) => {
         if(results.length === 0){
             {database.query('INSERT INTO favorites(publications_id, users_id)VALUES(?, ?)',[req.params.publication_id, userId], function(err, results, fields){
                 if(err){
-                    return res.status(400).json({message: err.sqlMessage})
+                    return res.status(400).json({message: `La publication visée n'existe plus, elle a probablement été supprimée`})
                 }
                 else{
                     return res.status(201).json({message: "Ajouté aux favoris"})
@@ -330,7 +329,6 @@ exports.addFavorites = (req, res, next) => {
             })}
         }
         else if(err){
-            console.log('on est ici');
             return res.status(400).json({message: err.sqlMessage})
         }
         else if(results.length > 0){

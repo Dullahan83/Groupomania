@@ -30,6 +30,7 @@ function Post(props) {
   const [title, setTitle] = useState(props.publi.title)
   const [image, setImage] = useState('')
   const [content, setContent] = useState('')
+
   const {
     refreshPubli,
     setRefreshPubli,
@@ -41,7 +42,6 @@ function Post(props) {
   } = useContext(userContext)
   let valueLike = hasLiked ? -1 : 1
   let valueDislike = !hasDisliked ? 0 : -1
-
   const imgUrl = `${host}${props.publi.image}`
 
   const formData = new FormData()
@@ -327,7 +327,9 @@ function Post(props) {
                 />
               </>
             ) : (
-              <img src={imgUrl} alt="" className="imgPubli" />
+              props.publi.image && (
+                <img src={imgUrl} alt="" className="imgPubli" />
+              )
             )}
             {edit ? (
               <textarea
