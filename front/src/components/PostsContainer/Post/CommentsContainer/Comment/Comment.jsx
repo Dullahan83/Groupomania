@@ -73,18 +73,30 @@ function Comment(props) {
             <div className="commentIcons">
               {(userId == props.comment.users_id || hasPerm == 1) &&
                 (isEditing ? (
-                  <SendIcon className="sendIcon" onClick={handleEdit} />
+                  <button
+                    className="invisibleButton"
+                    aria-label="submit comment modification"
+                  >
+                    <SendIcon className="sendIcon" onClick={handleEdit} />
+                  </button>
                 ) : (
-                  <EditIcon
-                    className="commentEditIcon"
-                    onClick={handleEditMode}
-                  />
+                  <button
+                    className="invisibleButton"
+                    aria-label="open comment edit mode"
+                  >
+                    <EditIcon
+                      className="commentEditIcon"
+                      onClick={handleEditMode}
+                    />
+                  </button>
                 ))}
               {userId == props.comment.users_id && (
-                <DeleteIcon
-                  className="commentDeleteIcon"
-                  onClick={handleDelete}
-                />
+                <button className="invisibleButton" aria-label="delete comment">
+                  <DeleteIcon
+                    className="commentDeleteIcon"
+                    onClick={handleDelete}
+                  />
+                </button>
               )}
             </div>
           </div>

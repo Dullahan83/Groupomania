@@ -26,8 +26,15 @@
 .infoCommentPoster .usernameLink {
   margin-left: 0.3rem;
 }
+.commentIcons {
+  display: flex;
+}
+.commentIcons .invisibleButton {
+  color: #000;
+  align-items: center;
+  display: flex;
+}
 .commentIcons .commentDeleteIcon {
-  padding-left: 1rem;
   &:hover {
     cursor: pointer;
     color: rgb(250, 17, 17);

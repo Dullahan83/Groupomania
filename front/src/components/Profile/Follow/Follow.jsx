@@ -38,7 +38,9 @@ function Follow(props) {
     <div className="followContainer">
       <p onClick={handleClick}>{props.username}</p>
       {username === usernameProfile && (
-        <CloseOutlinedIcon className="deleteFollow" onClick={deleteFollow} />
+        <button className="invisibleButton" aria-label="delete follow">
+          <CloseOutlinedIcon className="deleteFollow" onClick={deleteFollow} />
+        </button>
       )}
     </div>
   )

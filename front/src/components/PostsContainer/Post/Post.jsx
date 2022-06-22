@@ -261,14 +261,22 @@ function Post(props) {
     <div>
       <div className="publiWrapper">
         <div className="voteContainer">
-          <button onClick={handleLike} className="invisibleButton">
+          <button
+            onClick={handleLike}
+            className="invisibleButton"
+            aria-label="upvote"
+          >
             <ThumbUpIcon
               className={hasLiked ? 'likeIcon greenThumb' : 'likeIcon'}
             />
           </button>
           <p>{props.publi.upvote}</p>
           <p>{props.publi.downvote}</p>
-          <button onClick={handleDislike} className="invisibleButton">
+          <button
+            onClick={handleDislike}
+            className="invisibleButton"
+            aria-label="downvote"
+          >
             <ThumbDownIcon
               className={hasDisliked ? 'dislikeIcon redThumb' : 'dislikeIcon'}
             />
@@ -282,16 +290,22 @@ function Post(props) {
                 {props.publi.username}
               </span>
             </p>
-            <button className="invisibleButton">
-              {isHome ? (
+
+            {isHome ? (
+              <button className="invisibleButton" aria-label="add to bookmarks">
                 <BookmarkAddOutlinedIcon className="favIcon" onClick={addFav} />
-              ) : (
+              </button>
+            ) : (
+              <button
+                className="invisibleButton"
+                aria-label="remove from bookmarks"
+              >
                 <BookmarkRemoveOutlinedIcon
                   onClick={removeFav}
                   className="favIcon"
                 />
-              )}
-            </button>
+              </button>
+            )}
           </div>
           <div className="publi">
             {edit ? (
@@ -328,18 +342,28 @@ function Post(props) {
           </div>
           <div>
             <div className="bottomPart">
-              <AddCommentOutlinedIcon
-                className="addComment"
-                onClick={handleIsCommenting}
-              />
-              {commentList.length > 0 ? (
-                <CommentOutlinedIcon
-                  className="hasCommentIcon"
-                  onClick={handleClick}
+              <button
+                className="invisibleButton"
+                aria-label="open new comment form"
+              >
+                <AddCommentOutlinedIcon
+                  className="addComment"
+                  onClick={handleIsCommenting}
                 />
-              ) : (
-                <ModeCommentOutlinedIcon className="commentIcon" />
-              )}
+              </button>
+              <button
+                className="invisibleButton"
+                aria-label="show post comment"
+              >
+                {commentList.length > 0 ? (
+                  <CommentOutlinedIcon
+                    className="hasCommentIcon"
+                    onClick={handleClick}
+                  />
+                ) : (
+                  <ModeCommentOutlinedIcon className="commentIcon" />
+                )}
+              </button>
             </div>
             {isCommenting && (
               <CreateComment
@@ -358,12 +382,27 @@ function Post(props) {
         <div className="rightBorder">
           {(userId == props.publi.users_id || hasPerm == 1) &&
             (edit ? (
-              <SendIcon onClick={handleModifs} className="sendIcon" />
+              <button
+                className="invisibleButton"
+                aria-label="submit post modification"
+              >
+                <SendIcon onClick={handleModifs} className="sendIcon" />
+              </button>
             ) : (
-              <EditIcon className="editIcon" onClick={handleEdit} />
+              <button
+                className="invisibleButton"
+                aria-label="open post edit mode"
+              >
+                <EditIcon className="editIcon" onClick={handleEdit} />
+              </button>
             ))}
           {(userId == props.publi.users_id || hasPerm == 1) && (
-            <DeleteIcon className="deleteIcon" onClick={handleDelete} />
+            <button
+              className="invisibleButton deleteButton"
+              aria-label="delete post"
+            >
+              <DeleteIcon className="deleteIcon" onClick={handleDelete} />
+            </button>
           )}
         </div>
       </div>

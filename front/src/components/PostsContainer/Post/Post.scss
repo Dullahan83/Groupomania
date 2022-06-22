@@ -21,9 +21,12 @@
   border-radius: 20px 0 0 20px;
 }
 .rightBorder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background-color: #152847ff;
   color: white;
-  width: 2.5rem;
+  width: 2rem;
   text-align: center;
   padding: 1rem 0.5rem;
   border-radius: 0 20px 20px 0;
@@ -36,7 +39,6 @@
   }
 }
 .rightBorder .deleteIcon {
-  margin-top: 2.5rem;
   &:hover {
     color: rgb(250, 17, 17);
   }
@@ -142,7 +144,16 @@
   border: none;
   background-color: transparent;
 }
+.bottomPart .invisibleButton {
+  color: #000;
+  display: flex;
+}
+.rightBorder .invisibleButton {
+  display: flex;
+  width: 1.5rem;
 
+  justify-content: center;
+}
 .greenThumb {
   color: rgb(2, 190, 65);
 }
@@ -164,9 +175,13 @@
   outline: 1px #152847ff;
 }
 
-.rightBorder .sendIcon {
+.rightBorder .invisibleButton .sendIcon {
+  font-size: 25px;
   &:hover {
     cursor: pointer;
     color: rgb(2, 190, 65);
   }
+}
+.deleteButton {
+  margin-top: 2.5rem;
 }

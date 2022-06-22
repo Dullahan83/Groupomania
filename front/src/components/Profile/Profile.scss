@@ -155,12 +155,13 @@
   min-height: 8rem;
   white-space: pre-wrap;
 }
-.editProfile {
+.absolute {
   position: absolute;
-  font-size: 35px;
-  justify-self: flex-end;
   right: 1rem;
   top: 1rem;
+}
+.editProfile {
+  font-size: 35px;
   &:hover {
     cursor: pointer;
     color: #152847ff;

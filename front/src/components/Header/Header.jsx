@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import logo from '../../assets/icon-left-font-monochrome-white-logo.png'
+import logo from '../../assets/icon-left-font-monochrome-white-logo.webp'
 import '../Header/Header.scss'
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'

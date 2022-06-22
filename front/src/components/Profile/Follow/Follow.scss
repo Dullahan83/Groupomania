@@ -13,8 +13,10 @@
     cursor: pointer;
   }
 }
+.followContainer .invisibleButton {
+  margin-right: 0.5rem;
+}
 .deleteFollow {
-  margin-right: 1rem;
   color: red;
   &:hover {
     cursor: pointer;

@@ -64,11 +64,20 @@ function Createpost() {
   }
   return (
     <div className="createPostContainer">
-      {!makeAppear && <AddIcon onClick={handleClick} className="addPostIcon" />}
+      {!makeAppear && (
+        <button className="invisibleButton" aria-label="Open new post form">
+          <AddIcon onClick={handleClick} className="addPostIcon" />
+        </button>
+      )}
 
       {makeAppear && (
         <form className="postForm">
-          <CloseIcon className="closePostFormIcon" onClick={handleClick} />
+          <button
+            className="invisibleButtonSmall"
+            aria-label="Close new post form"
+          >
+            <CloseIcon className="closePostFormIcon" onClick={handleClick} />
+          </button>
           <label htmlFor="postTitle">Titre</label>
           <input
             type="text"
@@ -96,7 +105,7 @@ function Createpost() {
             onChange={(e) => setContent(e.target.value)}
             value={content}
           />
-          <button className="invisibleButton">
+          <button className="invisibleButton" aria-label="submit new post">
             <SendIcon className="sendIcon" onClick={handleSubmit} />
           </button>
         </form>

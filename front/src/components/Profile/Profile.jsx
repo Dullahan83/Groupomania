@@ -229,25 +229,34 @@ function Profile() {
     <div id="profile">
       <div id="profileCard">
         <div className="onglets">
-          <button className="invisibleButtonSmall">
+          <button className="invisibleButtonSmall" aria-label="profile infos">
             <AccountCircleIcon
               className="firstOnglet"
               onClick={handleProfile}
             />
           </button>
-          <button className="invisibleButtonSmall">
+          <button
+            className="invisibleButtonSmall"
+            aria-label="get profile posts"
+          >
             <SmsIcon
               className={revealPostList ? 'onglet activated' : 'onglet'}
               onClick={handlePosts}
             />
           </button>
-          <button className="invisibleButtonSmall">
+          <button
+            className="invisibleButtonSmall"
+            aria-label="get profile bookmarks"
+          >
             <BookmarksRoundedIcon
               className={revealBookmarks ? 'onglet activated' : 'onglet'}
               onClick={handleBookmarks}
             />
           </button>
-          <button className="invisibleButtonSmallLast">
+          <button
+            className="invisibleButtonSmallLast"
+            aria-label="get profile followed people"
+          >
             <GroupRoundedIcon
               className="lastOnglet"
               onClick={handleFollowList}
@@ -256,7 +265,10 @@ function Profile() {
         </div>
         <div id="profileContainer">
           {username != usernameProfile && (
-            <button className="invisibleButtonSmall">
+            <button
+              className="invisibleButtonSmall"
+              aria-label="back to profile"
+            >
               <KeyboardReturnOutlinedIcon
                 id="backToProfile"
                 onClick={handleBactToProfile}
@@ -266,11 +278,17 @@ function Profile() {
           {revealProfile ? (
             <>
               {userId === profileInfos.id ? (
-                <button className="invisibleButtonSmall">
+                <button
+                  className="invisibleButtonSmall absolute"
+                  aria-label="edit profile"
+                >
                   <EditIcon className="editProfile" onClick={handleEdit} />
                 </button>
               ) : (
-                <button className="invisibleButtonSmall">
+                <button
+                  className="invisibleButtonSmall absolute"
+                  aria-label="add to followed people"
+                >
                   <AddLinkOutlinedIcon
                     className="editProfile"
                     onClick={Follow}
@@ -332,7 +350,7 @@ function Profile() {
                         }}
                       />
                     </div>
-                    <button>
+                    <button aria-label="confirm profile modification">
                       <SendIcon id="sendIcon" onClick={handleSubmit} />
                     </button>
                   </div>
@@ -371,7 +389,11 @@ function Profile() {
                 )}
               </div>
               {!isEditing && userId === profileInfos.id && (
-                <button id="deleteButton" onClick={handleDelete}>
+                <button
+                  id="deleteButton"
+                  onClick={handleDelete}
+                  aria-label="delete profile"
+                >
                   Supprimer le profil
                 </button>
               )}
@@ -382,10 +404,18 @@ function Profile() {
                     choix ?
                   </p>
                   <div id="confirmButton">
-                    <button id="confirmationButton" onClick={deleteProfile}>
+                    <button
+                      id="confirmationButton"
+                      onClick={deleteProfile}
+                      aria-label="Confirm profile deletion"
+                    >
                       <CheckOutlinedIcon />
                     </button>
-                    <button id="backButton" onClick={handleDelete}>
+                    <button
+                      id="backButton"
+                      onClick={handleDelete}
+                      aria-label="abort profile deletion"
+                    >
                       <CloseOutlinedIcon />
                     </button>
                   </div>

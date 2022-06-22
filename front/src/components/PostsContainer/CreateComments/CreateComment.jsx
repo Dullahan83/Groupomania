@@ -48,9 +48,13 @@ function CreateComment(props) {
           value={content}
           placeholder="Ecrivez ici ..."
         />
-        <div onClick={handleSubmit} className="sendIconContainer">
+        <button
+          onClick={handleSubmit}
+          className="sendIconContainer invisibleButtonSmall"
+          aria-label="send new comment"
+        >
           <SendIcon className="sendIcon" />
-        </div>
+        </button>
       </div>
     </div>
   )

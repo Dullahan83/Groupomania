@@ -330,6 +330,7 @@ exports.addFavorites = (req, res, next) => {
             })}
         }
         else if(err){
+            console.log('on est ici');
             return res.status(400).json({message: err.sqlMessage})
         }
         else if(results.length > 0){
