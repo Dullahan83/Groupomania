@@ -1,6 +1,6 @@
 import './Auth.scss'
 import LogoAlone from '../../assets/icon.png'
-import picture from '../../assets/926109.png'
+import picture from '../../assets/926109.webp'
 import bandeau from '../../assets/icon-left-font-monochrome-white.svg'
 import Signup from '../../components/Signup/Signup'
 import Login from '../../components/Login/Login'
