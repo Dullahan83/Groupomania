@@ -9,7 +9,7 @@ import { userContext } from '../../utils/context/userContext'
 function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const { isOnline, setIsOnline, username } = useContext(userContext)
+  const { isOnline, setIsOnline, username, setHost } = useContext(userContext)
   const navigate = useNavigate()
 
   function handleForm(e) {
@@ -52,7 +52,11 @@ function Login() {
         placeholder="Mot de passe"
         value={password}
       />
-      <button onClick={handleForm} className="loginButton">
+      <button
+        onClick={handleForm}
+        className="loginButton"
+        aria-label="connection"
+      >
         Connection
       </button>
     </form>

@@ -9,7 +9,7 @@ function PostsContainer() {
   const token = Cookies.get('token')
   const headers = { Authorization: `Bearer ${token}` }
 
-  const { refreshPubli, userId, setHost, host } = useContext(userContext)
+  const { refreshPubli, userId, host } = useContext(userContext)
   const getPosts = () => {
     if (userId != null) {
       axios
@@ -18,7 +18,6 @@ function PostsContainer() {
         })
         .then((res) => {
           setPubliList(res.data.results)
-          setHost(res.data.host)
         })
         .catch((err) => {
           if (typeof err.response.data.message === 'string') {
