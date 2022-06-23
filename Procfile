@@ -1,1 +1,1 @@
-web: front/src/app.js
+web: node back/app.js
