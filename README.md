@@ -2,6 +2,7 @@
 
 ## Open a terminal and change directory for the "back" folder
     Use command line npm install
+    Create an images folder
     Run Server with command line nodemon server
 
 

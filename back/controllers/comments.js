@@ -48,10 +48,10 @@ exports.modify = (req, res, next) => {
             })
         }
         else if(err){
-            return res.status(400).json({message: err.sqlMessage})
+            return res.status(404).json({message: "Commentaire non trouvé, il semblerait qu'il ait été supprimé"})
         }
         else{
-            return res.status(403).json({message: "Vous avez pas le droit d'effectuer cette action"})
+            return res.status(403).json({message: "Vous n'avez pas le droit d'effectuer cette action"})
         }
     })
 }
@@ -71,7 +71,7 @@ exports.delete = (req, res, next) => {
             })
         }
         else if(err){
-            return res.status(400).json({message: err.sqlMessage});
+            return res.status(404).json({message: "Commentaire non trouvé, il semblerait qu'il ait déjà été supprimé"});
         }
         else{
             return res.status(403).json({message: "Vous avez pas le droit d'effectuer cette action"})

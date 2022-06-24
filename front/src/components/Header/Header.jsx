@@ -25,7 +25,7 @@ function Header() {
           <p className="corpName">Groupomania</p>
         </div>
         <ul>
-          <li onClick={Toggle}>{isHome ? 'Profil' : 'Acceuil'}</li>
+          <li onClick={Toggle}>{isHome ? 'Profil' : 'Accueil'}</li>
           <li onClick={LogOut}>Se déconnecter</li>
         </ul>
       </nav>
