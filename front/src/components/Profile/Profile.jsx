@@ -66,6 +66,7 @@ function Profile() {
   useEffect(() => {
     !isOnline && navigate('/')
   }, [refreshPubli])
+
   function getUserProfile() {
     axios
       .get(`${host}api/profile/${usernameProfile}`, {
@@ -81,6 +82,7 @@ function Profile() {
           toast.error(err.response.data.message[0])
         }
       })
+
     axios
       .get(`${host}api/profile/${usernameProfile}/favorites`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -297,7 +299,12 @@ function Profile() {
               )}
               <div className="imgProfile">
                 <img
-                  src={profileInfos.avatar != undefined ? imgUrl : defaultPp}
+                  src={
+                    profileInfos.avatar == undefined ||
+                    profileInfos.avatar == null
+                      ? defaultPp
+                      : imgUrl
+                  }
                   alt=""
                 />
                 <h2>{usernameProfile}</h2>

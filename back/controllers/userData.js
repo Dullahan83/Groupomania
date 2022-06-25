@@ -112,10 +112,9 @@ exports.modifyProfile = (req, res, next) => {
             }
         }
         else if(req.file === undefined){
-            const imgUrl = `images/DefaultProfil.jpg`;
             if(profileId === userId){
-                database.query('UPDATE users SET avatar=?, firstname=?, lastname=?, presentation=? WHERE id=?',
-                [imgUrl, req.body.firstname, req.body.lastname, req.body.presentation, profileId],
+                database.query('UPDATE users SET  firstname=?, lastname=?, presentation=? WHERE id=?',
+                [ req.body.firstname, req.body.lastname, req.body.presentation, profileId],
                 function(err, results, fields){
                     if(err){
                         return res.status(400).json({message: err.sqlMessage})

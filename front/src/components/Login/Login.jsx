@@ -21,7 +21,7 @@ function Login() {
       .then((res) => {
         setIsOnline(true)
         Cookies.set('token', res.data.token, { expires: 0.5 })
-        toast.success(`Bienvenue ${username} !`)
+        toast.success(`Bienvenue !`)
         navigate('/home')
       })
       .catch((err) => {
