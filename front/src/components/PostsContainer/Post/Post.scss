@@ -108,6 +108,7 @@
   height: 1.5rem;
   padding: 0.5rem 0.5rem;
   text-align: center;
+  word-break: break-all;
 }
 .publi .imgPubli {
   object-fit: contain;
@@ -118,6 +119,7 @@
 .publiContent {
   padding: 0.5rem 0.5rem;
   white-space: pre-wrap;
+  word-break: break-all;
 }
 .bottomPart {
   display: flex;
@@ -173,6 +175,7 @@
 .editPubliContent {
   resize: none;
   outline: 1px #152847ff;
+  word-break: break-all;
 }
 
 .rightBorder .invisibleButton .sendIcon {

@@ -15,7 +15,6 @@ function CommentsContainer(props) {
       {props.commentList.length > 0 &&
         props.commentList
           .sort((a, b) => (a.created_at > b.created_at ? -1 : 1))
-          .sort((a, b) => (a.upvote > b.upvote ? -1 : 1))
           .map((comment) => (
             <Comment
               comment={comment}
