@@ -5,7 +5,7 @@ let schema = yup.object().shape({
     .string()
     .required()
     .max(15,`Le nom d'utilisateur ne doit pas dépasser 15 caractère`)
-    .matches(/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð\s'.-]+$/,`Le nom d'utilisateur peux contenir des majuscules et des minuscules`),
+    .matches(/^[a-zA-Z0-9àáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð\s'.-]+$/,`Le nom d'utilisateur peux contenir des majuscules, des minuscules et des chiffres`),
     Email: yup
     .string()
     .required()
