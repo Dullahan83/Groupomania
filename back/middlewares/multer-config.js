@@ -2,14 +2,21 @@ const multer = require("multer");
 const { uuid } = require('uuidv4');
 //Créé une map permettant de récuperer l'extension de fichier d'une image
 const MIME_TYPES = {
-  "image/jpg" : "jpg",
-  "image/jpeg": "jpg",
-  "image/png" : "png",
-  "image/bmp" : "bmp",
-  "image/tiff": "tif",
-  "image/tiff": "tiff",
-  "image/webp": "webp",
-  "image/gif" : "gif" 
+  "image/jpg"       : "jpg",
+  "image/jpeg"      : "jpg",
+  "image/png"       : "png",
+  "image/bmp"       : "bmp",
+  "image/tiff"      : "tif",
+  "image/tiff"      : "tiff",
+  "image/webp"      : "webp",
+  "image/gif"       : "gif" ,
+  "video/x-msvideo" : "avi",
+  "audio/mpeg"      : "mp3",
+  "video/mpeg"      : "mpeg",
+  "audio/wav"       : "wav",
+  "video/webm"      : "webm",
+  "video/mp4"       : "mp4",
+  "video/x-matroska": "mkv"
 };
 
 const storage = multer.diskStorage({

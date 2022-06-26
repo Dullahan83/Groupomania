@@ -3,17 +3,17 @@ const yup = require('yup')
 let schema = yup.object().shape({
     Username: yup
     .string()
-    .required()
+    .required("Va falloir le choisir ce pseudo")
     .max(15,`Le nom d'utilisateur ne doit pas dépasser 15 caractère`)
     .matches(/^[a-zA-Z0-9àáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð\s'.-]+$/,`Le nom d'utilisateur peux contenir des majuscules, des minuscules et des chiffres`),
     Email: yup
     .string()
-    .required()
+    .required("Il va nous falloir une adresse mail, quand même ...")
     .email()
     .min(6,'Une adresse mail aussi courte, vraiment ?'),
     Password: yup
     .string()
-    .required()
+    .required("Et le mot de passe, faudrait pas l'oublier")
     .min(6,'Le mot de passe doit faire 6 caractère minimum')
     .matches(/[A-Z]/, 'Le mot de passe doit contenir au moins 1 majuscule')
     .matches(/[a-z]/, 'Le mot de passe doit contenir au moins 1 minuscule')
