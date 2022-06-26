@@ -9,7 +9,7 @@ import { userContext } from '../../utils/context/userContext'
 function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const { isOnline, setIsOnline, username, setHost } = useContext(userContext)
+  const { setIsOnline } = useContext(userContext)
   const navigate = useNavigate()
 
   function handleForm(e) {

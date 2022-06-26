@@ -1,4 +1,3 @@
-import { Fragment } from 'react'
 import yoda from '../../assets/yoda.webp'
 import icon from '../../assets/DeathStar.png'
 import './Error.scss'

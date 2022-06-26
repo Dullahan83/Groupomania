@@ -9,7 +9,7 @@ import { toast } from 'react-toastify'
 function CreateComment(props) {
   const [content, setContent] = useState('')
   const token = Cookies.get('token')
-  const { setRefreshPubli, userId } = useContext(userContext)
+  const { setRefreshPubli } = useContext(userContext)
   function handleSubmit() {
     if (content !== '') {
       axios

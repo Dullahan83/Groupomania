@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import './Signup.scss'
-import VisiblePassword from '@mui/icons-material/RemoveRedEyeRounded'
-import InvisiblePassword from '@mui/icons-material/VisibilityOffRounded'
+
 import { useState } from 'react'
 import axios from 'axios'
 import { toast } from 'react-toastify'

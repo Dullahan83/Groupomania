@@ -6,12 +6,14 @@ import Cookies from 'js-cookie'
 import { userContext } from '../../utils/context/userContext'
 
 function Header() {
-  const { setIsOnline, username, isHome, setIsHome } = useContext(userContext)
+  const { setIsOnline, username, setUsername, isHome, setIsHome } =
+    useContext(userContext)
   const navigate = useNavigate()
   function LogOut() {
     setIsOnline(false)
     Cookies.remove('token')
     setIsHome(true)
+    setUsername('')
   }
   function Toggle() {
     setIsHome(!isHome)
