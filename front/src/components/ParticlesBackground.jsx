@@ -1,3 +1,4 @@
+import React, { memo } from 'react'
 import Particles from 'react-tsparticles'
 import { loadFull } from 'tsparticles'
 import './ParticlesBackground.scss'
@@ -124,10 +125,12 @@ function ParticlesBackground() {
           background: { color: 'transparent' },
 
           retina_detect: true,
+
+          fullscreen: { enable: 'false' },
         }}
       />
     </div>
   )
 }
 
-export default ParticlesBackground
+export default memo(ParticlesBackground)
